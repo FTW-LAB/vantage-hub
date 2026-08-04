@@ -3,8 +3,10 @@ import { BRAND } from '#/lib/brand'
 
 const nav = [
   { to: '/', label: 'Home', exact: true },
+  { to: '/tools', label: 'Tools' },
   { to: '/models', label: 'Models' },
   { to: '/daemon', label: 'Daemon' },
+  { to: '/use-cases', label: 'Use-cases' },
   { to: '/activity', label: 'Ops' },
   { to: '/security', label: 'Security' },
 ] as const
@@ -51,7 +53,10 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
       <footer className="border-t border-[var(--ftw-border)] py-6">
         <div className="mx-auto flex max-w-5xl flex-col gap-2 px-3 text-[11px] text-[var(--ftw-label)] sm:flex-row sm:items-center sm:justify-between sm:px-4">
           <p className="tracking-wide">
-            {BRAND.productHouse} · unclassified ops board · {BRAND.domain}
+            {BRAND.productHouse} · unclassified ops board · {BRAND.domain} ·{' '}
+            <Link to="/legal" className="ops-accent no-underline">
+              legal
+            </Link>
           </p>
           <p className="max-w-md text-[10px] leading-relaxed">{BRAND.posture}</p>
         </div>

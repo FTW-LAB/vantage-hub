@@ -15,6 +15,8 @@ import { Route as DaemonRouteImport } from './routes/daemon'
 import { Route as LegalRouteImport } from './routes/legal'
 import { Route as ModelsRouteImport } from './routes/models'
 import { Route as SecurityRouteImport } from './routes/security'
+import { Route as ToolsRouteImport } from './routes/tools'
+import { Route as UseCasesRouteImport } from './routes/use-cases'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +48,16 @@ const SecurityRoute = SecurityRouteImport.update({
   path: '/security',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsRoute = ToolsRouteImport.update({
+  id: '/tools',
+  path: '/tools',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UseCasesRoute = UseCasesRouteImport.update({
+  id: '/use-cases',
+  path: '/use-cases',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +66,8 @@ export interface FileRoutesByFullPath {
   '/legal': typeof LegalRoute
   '/models': typeof ModelsRoute
   '/security': typeof SecurityRoute
+  '/tools': typeof ToolsRoute
+  '/use-cases': typeof UseCasesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +76,8 @@ export interface FileRoutesByTo {
   '/legal': typeof LegalRoute
   '/models': typeof ModelsRoute
   '/security': typeof SecurityRoute
+  '/tools': typeof ToolsRoute
+  '/use-cases': typeof UseCasesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,12 +87,30 @@ export interface FileRoutesById {
   '/legal': typeof LegalRoute
   '/models': typeof ModelsRoute
   '/security': typeof SecurityRoute
+  '/tools': typeof ToolsRoute
+  '/use-cases': typeof UseCasesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/activity' | '/daemon' | '/legal' | '/models' | '/security'
+  fullPaths:
+    | '/'
+    | '/activity'
+    | '/daemon'
+    | '/legal'
+    | '/models'
+    | '/security'
+    | '/tools'
+    | '/use-cases'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/activity' | '/daemon' | '/legal' | '/models' | '/security'
+  to:
+    | '/'
+    | '/activity'
+    | '/daemon'
+    | '/legal'
+    | '/models'
+    | '/security'
+    | '/tools'
+    | '/use-cases'
   id:
     | '__root__'
     | '/'
@@ -85,6 +119,8 @@ export interface FileRouteTypes {
     | '/legal'
     | '/models'
     | '/security'
+    | '/tools'
+    | '/use-cases'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -94,6 +130,8 @@ export interface RootRouteChildren {
   LegalRoute: typeof LegalRoute
   ModelsRoute: typeof ModelsRoute
   SecurityRoute: typeof SecurityRoute
+  ToolsRoute: typeof ToolsRoute
+  UseCasesRoute: typeof UseCasesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -140,6 +178,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SecurityRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools': {
+      id: '/tools'
+      path: '/tools'
+      fullPath: '/tools'
+      preLoaderRoute: typeof ToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/use-cases': {
+      id: '/use-cases'
+      path: '/use-cases'
+      fullPath: '/use-cases'
+      preLoaderRoute: typeof UseCasesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -150,6 +202,8 @@ const rootRouteChildren: RootRouteChildren = {
   LegalRoute: LegalRoute,
   ModelsRoute: ModelsRoute,
   SecurityRoute: SecurityRoute,
+  ToolsRoute: ToolsRoute,
+  UseCasesRoute: UseCasesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

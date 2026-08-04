@@ -2,6 +2,9 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { FLYWHEEL_STAGES } from '#/lib/brand'
 import { getHomeData } from '#/lib/activity-api'
 import { PulseStrip } from '#/components/PulseStrip'
+import { CopyPage } from '#/components/CopyPage'
+import { REPOS } from '#/lib/packages'
+import { CURATED_HF } from '#/lib/hf-catalog'
 
 export const Route = createFileRoute('/')({
   loader: () => getHomeData(),
@@ -14,7 +17,13 @@ function Home() {
   return (
     <div className="space-y-10">
       <section className="space-y-4">
-        <div className="ops-label">Unclassified · product hub</div>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="ops-label">Unclassified · product hub</div>
+          <CopyPage
+            title="Home"
+            body={`Packages: ${REPOS.map((r) => r.id).join(', ')}\nHF curated: ${CURATED_HF.map((m) => m.repoId).join(', ')}`}
+          />
+        </div>
         <h1 className="text-2xl font-semibold tracking-[0.06em] text-white uppercase sm:text-3xl">
           {data.productHouse}
           <span className="block text-[var(--ftw-muted)] sm:inline sm:before:content-['·_']">
@@ -29,6 +38,9 @@ function Home() {
           <Link to="/models" className="ops-btn ops-btn-solid no-underline">
             HF Models
           </Link>
+          <Link to="/tools" className="ops-btn no-underline">
+            Packages
+          </Link>
           <Link to="/daemon" className="ops-btn no-underline">
             GH Daemon
           </Link>
@@ -36,6 +48,39 @@ function Home() {
             Ops flywheel
           </Link>
         </div>
+      </section>
+
+      <section className="ops-panel overflow-x-auto p-3 sm:p-4">
+        <div className="ops-label mb-2">Packages (clone)</div>
+        <table className="w-full min-w-[520px] text-left text-[11px]">
+          <tbody>
+            {REPOS.map((r) => (
+              <tr key={r.id} className="border-t border-[var(--ftw-border)]">
+                <td className="py-1.5 pr-3 font-mono text-white">{r.id}</td>
+                <td className="ops-pre py-1.5 text-[10px] text-[var(--ftw-muted)]">
+                  {r.clone}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+
+      <section className="ops-panel overflow-x-auto p-3 sm:p-4">
+        <div className="ops-label mb-2">HF curated (public hub)</div>
+        <table className="w-full min-w-[480px] text-left text-[11px]">
+          <tbody>
+            {CURATED_HF.map((m) => (
+              <tr key={m.id} className="border-t border-[var(--ftw-border)]">
+                <td className="py-1.5 pr-3 text-white">{m.title}</td>
+                <td className="py-1.5 pr-3 font-mono text-[var(--ftw-muted)] break-all">
+                  {m.repoId}
+                </td>
+                <td className="py-1.5 text-[var(--ftw-label)]">{m.catalogScope}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </section>
 
       <section className="grid gap-3 sm:grid-cols-2">

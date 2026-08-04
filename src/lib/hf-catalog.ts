@@ -16,6 +16,13 @@ export type HfCatalogRow = {
   license: string
   queryPack: string
   githubBridge: string
+  /** FTW-LAB package slugs that pair with this model */
+  packageSlugs: string[]
+  /**
+   * public_hub = third-party public model (not hosted under huggingface.co/FTWLAB)
+   * house = would be FTWLAB-authored (none published yet)
+   */
+  catalogScope: 'public_hub' | 'house'
   tarxPull: string
   opsAction: string
   opsRole: string
@@ -91,6 +98,8 @@ export const CURATED_HF: HfCatalogRow[] = [
     queryPack: 'cti-ner',
     githubBridge:
       'Pair with org scout-daemon public CTI repo inventory; never scrape private feeds.',
+    packageSlugs: ['scout-daemon', 'ecosystem-prompts', 'tarx-bridge'],
+    catalogScope: 'public_hub',
     tarxPull:
       'huggingface-cli download ehsanaghaei/SecureBERT --local-dir $TARX_MODELS/SecureBERT',
     opsAction: 'Pull for offline CTI embedding labs',
@@ -117,6 +126,8 @@ Ethics gate: refuse private data, unauthorized access, or illegal rehost.`,
     queryPack: 'code-sec',
     githubBridge:
       'Pair with public CodeBERT research repos and org ecosystem-prompts only.',
+    packageSlugs: ['scout-daemon', 'ecosystem-prompts'],
+    catalogScope: 'public_hub',
     tarxPull:
       'huggingface-cli download microsoft/codebert-base --local-dir $TARX_MODELS/codebert-base',
     opsAction: 'Research-only code security baselines',
@@ -141,6 +152,8 @@ Ethics gate: no private repo access; no unauthorized scanning.`,
     license: 'Apache-2.0 (verify card)',
     queryPack: 'ocr-layout',
     githubBridge: 'Pair with WorldMonitor-style public signal stacks; no covert wiretaps.',
+    packageSlugs: ['tarx-bridge', 'ecosystem-prompts'],
+    catalogScope: 'public_hub',
     tarxPull:
       'huggingface-cli download openai/whisper-large-v3 --local-dir $TARX_MODELS/whisper-large-v3',
     opsAction: 'Authorized transcription only',
@@ -164,6 +177,8 @@ Ethics gate: refuse unauthorized audio surveillance.`,
     license: 'MIT (verify card)',
     queryPack: 'osint-embed',
     githubBridge: 'Index public GH Scout summaries — no private issue bodies.',
+    packageSlugs: ['scout-daemon', 'implementer-sdk', 'vantage-hub', 'tarx-bridge'],
+    catalogScope: 'public_hub',
     tarxPull:
       'huggingface-cli download BAAI/bge-small-en-v1.5 --local-dir $TARX_MODELS/bge-small-en-v1.5',
     opsAction: 'Build offline public-source retrieval',
@@ -187,6 +202,8 @@ Ethics gate: no private data embeddings.`,
     license: 'Apache-2.0 base + quant notes (verify card)',
     queryPack: 'gguf-local',
     githubBridge: 'Pair with tarx-bridge local runtime docs; never vendor TARX.',
+    packageSlugs: ['tarx-bridge', 'sovereignty-lab-kit', 'implementer-sdk'],
+    catalogScope: 'public_hub',
     tarxPull:
       'huggingface-cli download TheBloke/Mistral-7B-Instruct-v0.2-GGUF --include "*Q4_K_M*" --local-dir $TARX_MODELS/mistral-7b-instruct-gguf',
     opsAction: 'Local GGUF fielding for offline SOC lab',

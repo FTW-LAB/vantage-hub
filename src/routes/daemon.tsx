@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { getDaemonPage } from '#/lib/activity-api'
 import { AgentPrompt } from '#/components/AgentPrompt'
+import { CopyPage } from '#/components/CopyPage'
 
 export const Route = createFileRoute('/daemon')({
   loader: () => getDaemonPage(),
@@ -20,7 +21,10 @@ function DaemonPage() {
   return (
     <div className="space-y-8">
       <header className="space-y-3">
-        <div className="ops-label">GitHub lane · Scout daemon</div>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="ops-label">GitHub lane · Scout daemon</div>
+          <CopyPage title="Daemon / GH Scout" />
+        </div>
         <h1 className="text-2xl font-semibold tracking-[0.06em] text-white uppercase">
           Daemon
         </h1>

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { getModelsPage, getHfScout } from '#/lib/activity-api'
 import { CatalogCard } from '#/components/CatalogCard'
+import { CopyPage } from '#/components/CopyPage'
 import type { HfScoutResult } from '#/lib/hf-scout'
 
 export const Route = createFileRoute('/models')({
@@ -31,7 +32,10 @@ function ModelsPage() {
   return (
     <div className="space-y-8">
       <header className="space-y-3">
-        <div className="ops-label">Hugging Face lane · dual-forge HQ</div>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="ops-label">Hugging Face lane · dual-forge HQ</div>
+          <CopyPage title="Models / HF Scout" />
+        </div>
         <h1 className="text-2xl font-semibold tracking-[0.06em] text-white uppercase">
           Models
         </h1>

@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { FLYWHEEL_STAGES } from '#/lib/brand'
 import { getActivity } from '#/lib/activity-api'
+import { CopyPage } from '#/components/CopyPage'
 
 const SOURCE_LABEL: Record<string, string> = {
   gh_scout: 'GH Scout',
@@ -23,7 +24,10 @@ function ActivityPage() {
   return (
     <div className="space-y-8">
       <header className="space-y-3">
-        <div className="ops-label">Ops · dual-forge flywheel</div>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="ops-label">Ops · dual-forge flywheel</div>
+          <CopyPage title="Activity flywheel" />
+        </div>
         <h1 className="text-2xl font-semibold tracking-[0.06em] text-white uppercase">
           Activity
         </h1>

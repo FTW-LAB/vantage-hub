@@ -41,6 +41,15 @@ export function CatalogCard({ row }: { row: HfCatalogRow }) {
           <dd className="mt-0.5 text-[var(--ftw-muted)]">{row.githubBridge}</dd>
         </div>
         <div>
+          <dt className="ops-label">Scope / packages</dt>
+          <dd className="mt-0.5 text-[var(--ftw-muted)]">
+            {row.catalogScope}
+            {row.packageSlugs?.length
+              ? ` · ${row.packageSlugs.join(', ')}`
+              : ''}
+          </dd>
+        </div>
+        <div>
           <dt className="ops-label">TARX pull</dt>
           <dd className="ops-pre mt-0.5 text-[var(--ftw-muted)]">{row.tarxPull}</dd>
         </div>

@@ -1,4 +1,6 @@
-/** Public tools catalog — dual-forge peers. */
+/** Public tools catalog — dual-forge peers + all package slugs. */
+import { REPOS } from './packages'
+
 export type ToolEntry = {
   id: string
   name: string
@@ -8,6 +10,15 @@ export type ToolEntry = {
   summary: string
 }
 
+const packageTools: ToolEntry[] = REPOS.map((r) => ({
+  id: r.id,
+  name: r.id,
+  lane: r.id === 'tarx-bridge' ? 'bridge' : 'github',
+  opsRole: r.opsRole,
+  href: r.siteHref,
+  summary: r.summary,
+}))
+
 export const TOOLS: ToolEntry[] = [
   {
     id: 'gh-scout',
@@ -15,7 +26,8 @@ export const TOOLS: ToolEntry[] = [
     lane: 'github',
     opsRole: 'Discover',
     href: '/daemon',
-    summary: 'Public repos only. Rate-limited. legal_risk tags. Agent setup prompts.',
+    summary:
+      'Public repos only. Rate-limited. legal_risk tags. Agent setup prompts. Org FTW-LAB.',
   },
   {
     id: 'hf-model-scout',
@@ -23,32 +35,10 @@ export const TOOLS: ToolEntry[] = [
     lane: 'huggingface',
     opsRole: 'Discover',
     href: '/models',
-    summary: 'Public models / datasets / spaces via hub search. Seed fallback if empty.',
+    summary:
+      'Public models via hub search (User-Agent ftwlab-scout). seed_only fallback if empty.',
   },
-  {
-    id: 'implementer-sdk',
-    name: 'Implementer SDK',
-    lane: 'github',
-    opsRole: 'Package',
-    href: '/daemon#packages',
-    summary: 'Typed contracts for legal implementer workflows.',
-  },
-  {
-    id: 'geolite2-bridge',
-    name: 'GeoLite2 Bridge',
-    lane: 'github',
-    opsRole: 'Geo',
-    href: '/daemon#packages',
-    summary: 'City/ASN geo only. MaxMind license honesty. No household claims.',
-  },
-  {
-    id: 'tarx-bridge',
-    name: 'TARX Bridge',
-    lane: 'bridge',
-    opsRole: 'Field',
-    href: '/models#tarx',
-    summary: 'Upstream local private runtime. Pull models offline; never vendor TARX.',
-  },
+  ...packageTools,
   {
     id: 'ops-flywheel',
     name: 'Ops Flywheel',
