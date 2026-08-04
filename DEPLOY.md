@@ -1,8 +1,37 @@
 # FTW Lab production deploy — ftwlab.com
 
-**Path chosen:** GitHub org `ftwforge` → Vercel project from `ftwforge/vantage-hub` → Cloudflare DNS in front of GoDaddy registrar.
+**Path chosen:** Cloudflare DNS in front of GoDaddy registrar (primary).  
+**Alt path:** Stay on GoDaddy DNS with Vercel A/CNAME only (documented below).
 
 **Brand locked:** FTW Lab · `#38ADFA` · `public/ftw-logo.png` · human `wantzjt` · ops@ftwlab.com
+
+## Live status (as of bootstrap)
+
+| Item | Status |
+|------|--------|
+| App code | `/Users/master/ftw-lab/vantage-hub` (TanStack Start + Nitro vercel preset) |
+| Vercel project | Hobby team `tarx-75a403e7` / project **vantage-hub** |
+| Green URL | https://vantage-hub-seven.vercel.app (**200**) |
+| Production alias | https://vantage-hub-seven.vercel.app |
+| Domains on project | `ftwlab.com`, `www.ftwlab.com` (attached; DNS not yet pointed) |
+| Env (Production) | `VITE_PUBLIC_HOSTNAME`, `VITE_PUBLIC_GITHUB_ORG`, `VITE_PUBLIC_GITHUB_HUMAN` |
+| GitHub org `ftwforge` | **Not created yet** — GitHub has no free-org create API; use click-path + `scripts/bootstrap-github.sh` |
+| DNS | Still GoDaddy NS (`ns45/46.domaincontrol.com`); parking A records |
+
+### Exact Vercel DNS targets (use these, not older docs)
+
+```
+A      @    216.198.79.1
+A      @    64.29.17.1
+CNAME  www  ee12a1d701552ed1.vercel-dns-017.com.
+```
+
+Re-check anytime:
+
+```bash
+vercel domains verify ftwlab.com --scope tarx-75a403e7
+vercel domains verify www.ftwlab.com --scope tarx-75a403e7
+```
 
 ---
 
