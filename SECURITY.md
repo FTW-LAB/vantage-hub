@@ -13,7 +13,7 @@ Do **not** open a public issue for unfixed security problems.
 
 ## Scope
 
-- FTW Lab open repositories under the `ftwforge` organization
+- FTW Lab open repositories under the `FTW-LAB` organization
 - Public site at https://ftwlab.com
 
 ## Out of scope

@@ -37,7 +37,7 @@ function Home() {
               rel="noreferrer"
               target="_blank"
             >
-              ftwforge/vantage-hub
+              FTW-LAB/vantage-hub
             </a>
           </div>
         </div>

@@ -7,9 +7,9 @@ export const BRAND = {
   colorRgb: '56, 173, 250',
   email: 'ops@ftwlab.com',
   humanGithub: 'wantzjt',
-  /** Set after org create; override with VITE_PUBLIC_GITHUB_ORG */
+  /** Canonical org: https://github.com/FTW-LAB */
   githubOrg:
-    (import.meta.env.VITE_PUBLIC_GITHUB_ORG as string | undefined) || 'ftwforge',
+    (import.meta.env.VITE_PUBLIC_GITHUB_ORG as string | undefined) || 'FTW-LAB',
   logoPath: '/ftw-logo.png',
   tagline: 'Sovereign open tooling. Legal public-source only.',
   posture: 'Legal OSINT / public-source only. No unauthorized access.',

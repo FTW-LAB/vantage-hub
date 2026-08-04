@@ -7,7 +7,7 @@
 | Brand | `#38ADFA` + geometric **F** logo |
 | Stack | TanStack Start + Nitro (Vercel preset) |
 | Human | [wantzjt](https://github.com/wantzjt) |
-| Org | [ftwforge](https://github.com/ftwforge) |
+| Org | [FTW-LAB](https://github.com/FTW-LAB) |
 | Ops | ops@ftwlab.com |
 
 ## Features

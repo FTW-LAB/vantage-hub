@@ -15,7 +15,7 @@
 | Production alias | https://vantage-hub-seven.vercel.app |
 | Domains on project | `ftwlab.com`, `www.ftwlab.com` (attached; DNS not yet pointed) |
 | Env (Production) | `VITE_PUBLIC_HOSTNAME`, `VITE_PUBLIC_GITHUB_ORG`, `VITE_PUBLIC_GITHUB_HUMAN` |
-| GitHub org `ftwforge` | **Not created yet** — GitHub has no free-org create API; use click-path + `scripts/bootstrap-github.sh` |
+| GitHub org `FTW-LAB` | **Not created yet** — GitHub has no free-org create API; use click-path + `scripts/bootstrap-github.sh` |
 | DNS | Still GoDaddy NS (`ns45/46.domaincontrol.com`); parking A records |
 
 ### Exact Vercel DNS targets (use these, not older docs)
@@ -43,7 +43,7 @@ GitHub API cannot create orgs for free accounts via `gh`. Use the UI:
 
 1. Open **https://github.com/account/organizations/new** while logged in as **wantzjt**
 2. Choose **Create a free organization**
-3. **Organization name:** `ftwforge`  
+3. **Organization name:** `FTW-LAB`  
    (If taken try in order: `ftw-hub`, `ftwhq`, `getftw`, `ftwops`, `withftw`, `lab-ftw`)  
    Note: `ftwlab` is **TAKEN** — do not use.
 4. **Contact email:** ops@ftwlab.com (or your verified email)
@@ -56,7 +56,7 @@ GitHub API cannot create orgs for free accounts via `gh`. Use the UI:
 
 ### Org profile README
 
-Repo: `ftwforge/.github` with `profile/README.md` (flywheel stages → https://ftwlab.com/activity).
+Repo: `FTW-LAB/.github` with `profile/README.md` (flywheel stages → https://ftwlab.com/activity).
 
 ### Repos (each public, MIT + SECURITY.md + AUP)
 
@@ -73,7 +73,7 @@ Repo: `ftwforge/.github` with `profile/README.md` (flywheel stages → https://f
 CLI pattern (after org exists):
 
 ```bash
-gh repo create ftwforge/vantage-hub --public --source=. --remote=origin --push
+gh repo create FTW-LAB/vantage-hub --public --source=. --remote=origin --push
 ```
 
 SECURITY.md contact: **ops@ftwlab.com** in every repo.
@@ -87,7 +87,7 @@ SECURITY.md contact: **ops@ftwlab.com** in every repo.
 1. **https://vercel.com** → log in as wantzjt
 2. Team switcher (top left) → select personal or a dedicated FTW team (optional; Hobby is fine)
 3. **Add New…** → **Project**
-4. **Import Git Repository** → authorize GitHub if needed → select **ftwforge/vantage-hub**
+4. **Import Git Repository** → authorize GitHub if needed → select **FTW-LAB/vantage-hub**
 5. **Configure Project**
    - Framework: TanStack Start (or Other; Nitro handles output)
    - **Build Command:** `npm run build`
@@ -98,7 +98,7 @@ SECURITY.md contact: **ops@ftwlab.com** in every repo.
 | Name | Value |
 |------|--------|
 | `VITE_PUBLIC_HOSTNAME` | `ftwlab.com` |
-| `VITE_PUBLIC_GITHUB_ORG` | `ftwforge` |
+| `VITE_PUBLIC_GITHUB_ORG` | `FTW-LAB` |
 | `VITE_PUBLIC_GITHUB_HUMAN` | `wantzjt` |
 | `GITHUB_TOKEN` | *(optional)* read-only PAT for live flywheel |
 
@@ -214,7 +214,7 @@ Does **not** block deploy.
 - [ ] `https://www.ftwlab.com` → **301** → `https://ftwlab.com`
 - [ ] Logo + `#38ADFA` visible
 - [ ] `/activity` works
-- [ ] wantzjt owns org `ftwforge`
+- [ ] wantzjt owns org `FTW-LAB`
 - [ ] No secrets in git (`.env` gitignored; tokens only in Vercel)
 - [ ] This DEPLOY.md matches the path used
 
