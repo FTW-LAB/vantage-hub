@@ -21,6 +21,25 @@ const config = defineConfig({
     nitro({
       preset: process.env.VERCEL || process.env.NITRO_PRESET === 'vercel' ? 'vercel' : undefined,
       rollupConfig: { external: [/^@sentry\//] },
+      routeRules: {
+        '/**': {
+          headers: {
+            'Strict-Transport-Security':
+              'max-age=63072000; includeSubDomains; preload',
+            'X-Content-Type-Options': 'nosniff',
+            'X-Frame-Options': 'DENY',
+            'Referrer-Policy': 'strict-origin-when-cross-origin',
+            'Permissions-Policy':
+              'accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()',
+            'Cross-Origin-Opener-Policy': 'same-origin',
+            'Cross-Origin-Resource-Policy': 'same-origin',
+            'X-DNS-Prefetch-Control': 'off',
+            'X-Permitted-Cross-Domain-Policies': 'none',
+            'Content-Security-Policy':
+              "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data: https:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://huggingface.co https://api.github.com https://*.vercel.app; upgrade-insecure-requests",
+          },
+        },
+      },
     }),
     tailwindcss(),
     tanstackStart(),

@@ -70,6 +70,37 @@ function SecurityPage() {
       </section>
 
       <section className="ops-panel p-4">
+        <h2 className="ops-label">Edge + origin controls (live)</h2>
+        <ul className="mt-2 list-disc space-y-2 pl-4 text-[12px] text-[var(--ftw-muted)]">
+          <li>
+            <strong className="text-white">Transport:</strong> HSTS preload-class
+            max-age, HTTPS only, TLS ≥ 1.2 at edge when Cloudflare is in path.
+          </li>
+          <li>
+            <strong className="text-white">Browser isolation:</strong> CSP
+            (default-src self; no frames), X-Frame-Options DENY, COOP/CORP
+            same-origin, nosniff, locked Permissions-Policy.
+          </li>
+          <li>
+            <strong className="text-white">Vercel WAF:</strong> deny common
+            exploit probes (wp-admin, .env, .git, phpunit, aws creds); rate-limit
+            aggressive clients; deny empty UA on write methods.
+          </li>
+          <li>
+            <strong className="text-white">Disclosure:</strong>{' '}
+            <a className="ops-accent" href="/.well-known/security.txt">
+              /.well-known/security.txt
+            </a>
+          </li>
+          <li>
+            <strong className="text-white">Cloudflare:</strong> nameservers live;
+            Full (strict) SSL, Always HTTPS, Rocket Loader off, security level
+            high — see DEPLOY.md / scripts/cloudflare-secure-ftwlab.sh.
+          </li>
+        </ul>
+      </section>
+
+      <section className="ops-panel p-4">
         <h2 className="ops-label">Out of scope</h2>
         <ul className="mt-2 list-disc space-y-1 pl-4 text-[12px] text-[var(--ftw-muted)]">
           <li>Unauthorized access, credential stuffing, malware distribution</li>
