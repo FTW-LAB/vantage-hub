@@ -12,26 +12,44 @@
 | App code | `/Users/master/ftw-lab/vantage-hub` (TanStack Start + Nitro vercel preset) |
 | Vercel project | Hobby team `tarx-75a403e7` / project **vantage-hub** |
 | Green URL | https://vantage-hub-seven.vercel.app (**200**) · latest deploy aliases to project |
-| Domains on project | `ftwlab.com`, `www.ftwlab.com` (attached; www→apex 301; DNS not yet pointed) |
-| Env (Production) | `VITE_PUBLIC_HOSTNAME=ftwlab.com`, `VITE_PUBLIC_GITHUB_ORG=FTW-LAB`, `VITE_PUBLIC_GITHUB_HUMAN=wantzjt` |
-| GitHub org | **[FTW-LAB](https://github.com/FTW-LAB)** — wantzjt **admin** · profile set · all beachhead repos **public on main** |
+| Domains on project | `ftwlab.com`, `www.ftwlab.com` (attached; www→apex 301) |
+| Env (Production) | `VITE_PUBLIC_HOSTNAME=ftwlab.com`, `VITE_PUBLIC_GITHUB_ORG=FTW-LAB`, `VITE_PUBLIC_HF_ORG=FTWLAB` |
+| GitHub org | **[FTW-LAB](https://github.com/FTW-LAB)** |
 | App repo | https://github.com/FTW-LAB/vantage-hub |
-| Vercel ↔ Git | Authorize **FTW-LAB** for Vercel GitHub App, then: Project → Settings → Git → connect `FTW-LAB/vantage-hub` |
-| DNS | Still GoDaddy NS (`ns45/46.domaincontrol.com`); parking A records — cutover still required |
+| DNS / NS | **Cloudflare** (`ada.ns.cloudflare.com` / `ignacio.ns.cloudflare.com`) via GoDaddy registrar |
+| Security wrap | HSTS/CSP/COOP/CORP + Vercel WAF rules published + `/.well-known/security.txt` |
 
-### Exact Vercel DNS targets (use these, not older docs)
+### Cloudflare DNS → Vercel (DNS-only / grey cloud recommended)
+
+Re-check with `vercel domains verify ftwlab.com --scope tarx-75a403e7`. Current target pattern:
 
 ```
-A      @    216.198.79.1
-A      @    64.29.17.1
-CNAME  www  ee12a1d701552ed1.vercel-dns-017.com.
+CNAME  @    ee12a1d701552ed1.vercel-dns-017.com.   # Proxy OFF (DNS only)
+CNAME  www  ee12a1d701552ed1.vercel-dns-017.com.   # Proxy OFF (DNS only)
 ```
+
+Or A records if Vercel UI shows them. Automated (needs token):
+
+```bash
+export CLOUDFLARE_API_TOKEN=…
+/Users/master/ftw-lab/scripts/cloudflare-secure-ftwlab.sh
+```
+
+### Cloudflare security checklist (dashboard if no token)
+
+1. **SSL/TLS** → Overview → **Full (strict)**
+2. **SSL/TLS** → Edge Certificates → **Always Use HTTPS** On · min TLS **1.2** · TLS 1.3 On
+3. **Speed** → Optimization → **Rocket Loader Off** (breaks React hydration)
+4. **Security** → Settings → Security Level **High** · Browser Integrity Check On
+5. **Rules** → Redirect Rules → `www.ftwlab.com` → `https://ftwlab.com` 301
+6. Do **not** enable email address obfuscation on API-heavy paths if it breaks JSON (optional)
 
 Re-check anytime:
 
 ```bash
+dig +short NS ftwlab.com
 vercel domains verify ftwlab.com --scope tarx-75a403e7
-vercel domains verify www.ftwlab.com --scope tarx-75a403e7
+curl -sI https://vantage-hub-seven.vercel.app | head
 ```
 
 ---
