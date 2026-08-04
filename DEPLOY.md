@@ -36,48 +36,28 @@ vercel domains verify www.ftwlab.com --scope tarx-75a403e7
 
 ---
 
-## PHASE A — GitHub (as wantzjt)
+## PHASE A — GitHub (as wantzjt) — DONE
 
-### Create org (dashboard)
+**Org:** [https://github.com/FTW-LAB](https://github.com/FTW-LAB)  
+**Admin:** wantzjt  
+**Profile:** `FTW Lab — sovereign open tooling. Contributions by wantzjt.` · URL https://ftwlab.com · ops@ftwlab.com  
+**Org README:** [FTW-LAB/.github](https://github.com/FTW-LAB/.github) (flywheel → https://ftwlab.com/activity)
 
-GitHub API cannot create orgs for free accounts via `gh`. Use the UI:
+### Repos (public, MIT + SECURITY.md + AUP) — all on `main`
 
-1. Open **https://github.com/account/organizations/new** while logged in as **wantzjt**
-2. Choose **Create a free organization**
-3. **Organization name:** `FTW-LAB`  
-   (If taken try in order: `ftw-hub`, `ftwhq`, `getftw`, `ftwops`, `withftw`, `lab-ftw`)  
-   Note: `ftwlab` is **TAKEN** — do not use.
-4. **Contact email:** ops@ftwlab.com (or your verified email)
-5. Complete captcha / plan selection (Free)
-6. Skip inviting members for now
-7. **Profile description:**  
-   `FTW Lab — sovereign open tooling. Contributions by wantzjt.`
-8. **URL:** `https://ftwlab.com`
-9. Confirm you (**wantzjt**) are an **Owner**
-
-### Org profile README
-
-Repo: `FTW-LAB/.github` with `profile/README.md` (flywheel stages → https://ftwlab.com/activity).
-
-### Repos (each public, MIT + SECURITY.md + AUP)
-
-| Repo | Role |
-|------|------|
-| `vantage-hub` | Public site (this repo) |
-| `scout-daemon` | Scout stage |
-| `implementer-sdk` | Implement stage |
-| `geolite2-bridge` | Geo IP bridge (legal MaxMind terms) |
-| `tarx-bridge` | TARX **upstream only** |
-| `ecosystem-prompts` | Prompt library |
-| `sovereignty-lab-kit` | Local-first kit |
-
-CLI pattern (after org exists):
+| Repo | URL |
+|------|-----|
+| `vantage-hub` | https://github.com/FTW-LAB/vantage-hub |
+| `scout-daemon` | https://github.com/FTW-LAB/scout-daemon |
+| `implementer-sdk` | https://github.com/FTW-LAB/implementer-sdk |
+| `geolite2-bridge` | https://github.com/FTW-LAB/geolite2-bridge |
+| `tarx-bridge` | https://github.com/FTW-LAB/tarx-bridge |
+| `ecosystem-prompts` | https://github.com/FTW-LAB/ecosystem-prompts |
+| `sovereignty-lab-kit` | https://github.com/FTW-LAB/sovereignty-lab-kit |
 
 ```bash
-gh repo create FTW-LAB/vantage-hub --public --source=. --remote=origin --push
+/Users/master/ftw-lab/scripts/bootstrap-github.sh
 ```
-
-SECURITY.md contact: **ops@ftwlab.com** in every repo.
 
 ---
 
