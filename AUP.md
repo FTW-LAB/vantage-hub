@@ -2,7 +2,7 @@
 
 **Product house:** FTW Lab  
 **Contact:** ops@ftwlab.com  
-**Human maintainer:** wantzjt  
+**Ops:** ops.com  
 
 ## Allowed
 
@@ -16,7 +16,7 @@
 - Unauthorized access to computer systems, accounts, or data
 - Distribution of malware, ransomware, or exploit weaponization against third parties
 - Scraping or processing personal data beyond what is lawfully public
-- Misrepresenting FTW Lab or wantzjt affiliation
+- Misrepresenting FTW Lab affiliation
 - Rebranding proprietary TARX product surfaces as FTW Lab product
 
 ## Enforcement

@@ -11,7 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ActivityRouteImport } from './routes/activity'
+import { Route as DaemonRouteImport } from './routes/daemon'
 import { Route as LegalRouteImport } from './routes/legal'
+import { Route as ModelsRouteImport } from './routes/models'
+import { Route as SecurityRouteImport } from './routes/security'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -23,40 +26,74 @@ const ActivityRoute = ActivityRouteImport.update({
   path: '/activity',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DaemonRoute = DaemonRouteImport.update({
+  id: '/daemon',
+  path: '/daemon',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LegalRoute = LegalRouteImport.update({
   id: '/legal',
   path: '/legal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ModelsRoute = ModelsRouteImport.update({
+  id: '/models',
+  path: '/models',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SecurityRoute = SecurityRouteImport.update({
+  id: '/security',
+  path: '/security',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/activity': typeof ActivityRoute
+  '/daemon': typeof DaemonRoute
   '/legal': typeof LegalRoute
+  '/models': typeof ModelsRoute
+  '/security': typeof SecurityRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/activity': typeof ActivityRoute
+  '/daemon': typeof DaemonRoute
   '/legal': typeof LegalRoute
+  '/models': typeof ModelsRoute
+  '/security': typeof SecurityRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/activity': typeof ActivityRoute
+  '/daemon': typeof DaemonRoute
   '/legal': typeof LegalRoute
+  '/models': typeof ModelsRoute
+  '/security': typeof SecurityRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/activity' | '/legal'
+  fullPaths: '/' | '/activity' | '/daemon' | '/legal' | '/models' | '/security'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/activity' | '/legal'
-  id: '__root__' | '/' | '/activity' | '/legal'
+  to: '/' | '/activity' | '/daemon' | '/legal' | '/models' | '/security'
+  id:
+    | '__root__'
+    | '/'
+    | '/activity'
+    | '/daemon'
+    | '/legal'
+    | '/models'
+    | '/security'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ActivityRoute: typeof ActivityRoute
+  DaemonRoute: typeof DaemonRoute
   LegalRoute: typeof LegalRoute
+  ModelsRoute: typeof ModelsRoute
+  SecurityRoute: typeof SecurityRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -75,11 +112,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ActivityRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/daemon': {
+      id: '/daemon'
+      path: '/daemon'
+      fullPath: '/daemon'
+      preLoaderRoute: typeof DaemonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/legal': {
       id: '/legal'
       path: '/legal'
       fullPath: '/legal'
       preLoaderRoute: typeof LegalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/models': {
+      id: '/models'
+      path: '/models'
+      fullPath: '/models'
+      preLoaderRoute: typeof ModelsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/security': {
+      id: '/security'
+      path: '/security'
+      fullPath: '/security'
+      preLoaderRoute: typeof SecurityRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -88,7 +146,10 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ActivityRoute: ActivityRoute,
+  DaemonRoute: DaemonRoute,
   LegalRoute: LegalRoute,
+  ModelsRoute: ModelsRoute,
+  SecurityRoute: SecurityRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

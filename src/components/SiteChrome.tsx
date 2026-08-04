@@ -2,69 +2,58 @@ import { Link } from '@tanstack/react-router'
 import { BRAND } from '#/lib/brand'
 
 const nav = [
-  { to: '/', label: 'Home' },
-  { to: '/activity', label: 'Activity' },
-  { to: '/legal', label: 'Legal' },
+  { to: '/', label: 'Home', exact: true },
+  { to: '/models', label: 'Models' },
+  { to: '/daemon', label: 'Daemon' },
+  { to: '/activity', label: 'Ops' },
+  { to: '/security', label: 'Security' },
 ] as const
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100">
-      <header className="border-b border-white/10 bg-zinc-950/90 backdrop-blur sticky top-0 z-40">
-        <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
-          <Link to="/" className="flex items-center gap-3 no-underline">
+    <div className="ops-shell min-h-screen bg-[var(--ftw-void)] text-[#e8e8ec]">
+      <header className="sticky top-0 z-40 border-b border-[var(--ftw-border)] bg-[rgba(5,5,6,0.92)] backdrop-blur">
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-3 py-3 sm:px-4">
+          <Link to="/" className="flex min-w-0 items-center gap-2.5 no-underline">
             <img
               src={BRAND.logoPath}
-              alt="FTW Lab"
-              width={36}
-              height={36}
-              className="h-9 w-9 rounded-md shadow-lg shadow-[rgba(56,173,250,0.35)]"
+              alt=""
+              width={28}
+              height={28}
+              className="h-7 w-7 shrink-0 rounded-sm"
             />
-            <div className="leading-tight">
-              <div className="text-sm font-semibold tracking-wide text-white">
+            <div className="min-w-0 leading-tight">
+              <div className="truncate text-xs font-semibold tracking-[0.12em] text-white uppercase">
                 {BRAND.productHouse}
               </div>
-              <div className="text-[11px] text-zinc-400">{BRAND.domain}</div>
+              <div className="ops-label truncate">
+                {BRAND.productHub} · dual-forge
+              </div>
             </div>
           </Link>
-          <nav className="flex items-center gap-1 sm:gap-2">
+          <nav className="flex max-w-full flex-wrap items-center gap-0.5 sm:gap-1">
             {nav.map((item) => (
               <Link
                 key={item.to}
                 to={item.to}
-                className="rounded-md px-3 py-1.5 text-sm text-zinc-300 no-underline hover:bg-white/5 hover:text-white [&.active]:bg-[rgba(56,173,250,0.15)] [&.active]:text-[#38ADFA]"
-                activeOptions={{ exact: item.to === '/' }}
+                className="rounded-sm px-2 py-1.5 text-[11px] tracking-[0.1em] text-[var(--ftw-muted)] uppercase no-underline hover:bg-white/5 hover:text-white [&.active]:bg-[var(--ftw-accent-dim)] [&.active]:text-[var(--ftw-accent)] sm:px-2.5"
+                activeOptions={{ exact: 'exact' in item ? item.exact : false }}
               >
                 {item.label}
               </Link>
             ))}
-            <a
-              href={`https://github.com/${BRAND.githubOrg}`}
-              className="ml-1 rounded-md border border-[rgba(56,173,250,0.4)] bg-[#38ADFA] px-3 py-1.5 text-sm font-medium text-black no-underline hover:bg-[#65c4ff]"
-              rel="noreferrer"
-              target="_blank"
-            >
-              GitHub
-            </a>
           </nav>
         </div>
       </header>
-      <main className="mx-auto max-w-5xl px-4 py-10">{children}</main>
-      <footer className="border-t border-white/10 py-8">
-        <div className="mx-auto flex max-w-5xl flex-col gap-2 px-4 text-sm text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © {new Date().getFullYear()} {BRAND.productHouse}. Contributions by{' '}
-            <a
-              className="text-[#38ADFA] no-underline hover:underline"
-              href={`https://github.com/${BRAND.humanGithub}`}
-              rel="noreferrer"
-              target="_blank"
-            >
-              {BRAND.humanGithub}
-            </a>
-            .
+
+      <main className="mx-auto max-w-5xl px-3 py-8 sm:px-4 sm:py-10">{children}</main>
+
+      <footer className="border-t border-[var(--ftw-border)] py-6">
+        <div className="mx-auto flex max-w-5xl flex-col gap-2 px-3 text-[11px] text-[var(--ftw-label)] sm:flex-row sm:items-center sm:justify-between sm:px-4">
+          <p className="tracking-wide">
+            {BRAND.productHouse} · unclassified ops board · {BRAND.domain}
           </p>
-          <p className="text-xs text-zinc-600">{BRAND.posture}</p>
+          <p className="max-w-md text-[10px] leading-relaxed">{BRAND.posture}</p>
         </div>
       </footer>
     </div>

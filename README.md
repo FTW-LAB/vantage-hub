@@ -1,46 +1,41 @@
 # vantage-hub
 
-**FTW Lab** public hub — sovereign open tooling surface for [ftwlab.com](https://ftwlab.com).
+**FTW Lab · Vantage** — dual-forge product hub for [ftwlab.com](https://ftwlab.com).
 
-| | |
-|---|---|
-| Brand | `#38ADFA` + geometric **F** logo |
-| Stack | TanStack Start + Nitro (Vercel preset) |
-| Human | [wantzjt](https://github.com/wantzjt) |
-| Org | [FTW-LAB](https://github.com/FTW-LAB) |
-| Ops | ops@ftwlab.com |
+| Lane | Role |
+|------|------|
+| GitHub | Code, packages, public Scout |
+| Hugging Face | Models, datasets, spaces — [FTWLAB](https://huggingface.co/FTWLAB) |
 
-## Features
+## Surfaces
 
-- Homepage brand + **live pulse** strip
-- `/activity` flywheel (wantzjt + org public events + implementer + scout_runs; seed fallback)
-- `/legal` AUP + OSINT posture
-- Local dev: `0.0.0.0:8080`
+| Path | Role |
+|------|------|
+| `/` | Dual-forge home + tools catalog |
+| `/models` | HF HQ — Scout, packs, curated catalog, agent prompts |
+| `/daemon` | GitHub Scout + packages |
+| `/activity` | Ops flywheel (GH + HF + model_pull) |
+| `/security` | Dual-forge supply chain policy |
+| `/legal` | AUP / ethics |
 
 ## Develop
 
 ```bash
-npm install
-npm run dev
+./startup.sh
 # → http://0.0.0.0:8080
 ```
 
-## Build / deploy
-
 ```bash
+npm run typecheck
 npm run build
 ```
 
-On Vercel, Nitro applies the **vercel** preset automatically. See [DEPLOY.md](./DEPLOY.md).
-
 ## Env
 
-Copy `.env.example`. Production requires at least:
+See `.env.example`. Production: `VITE_PUBLIC_HOSTNAME`, `VITE_PUBLIC_GITHUB_ORG`, `VITE_PUBLIC_HF_ORG`.
 
-- `VITE_PUBLIC_HOSTNAME=ftwlab.com`
+Optional server: `GITHUB_TOKEN` (read-only) for org public events.
 
-Optional: `GITHUB_TOKEN` (read-only PAT) for live flywheel rate limits.
+## Posture
 
-## Legal
-
-MIT · [SECURITY.md](./SECURITY.md) · [AUP.md](./AUP.md) · legal public-source only.
+Legal public-source only · MaxMind honesty · HF license respect · TARX upstream only · no personal handles on public UI.

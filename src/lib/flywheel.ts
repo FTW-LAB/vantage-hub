@@ -1,17 +1,17 @@
 /**
- * Flywheel activity sources — legal public GitHub events only.
- * Merges: wantzjt + org public events + implementer seed + scout_runs seed.
- * When GITHUB_TOKEN is set (server), live public events are preferred;
- * seed events remain if rate-limited or unauthenticated.
+ * Dual-forge flywheel — GH Scout + HF Scout + model_pull + packages.
+ * Public org events only. Never personal-handle themed on public UI.
  */
 
 import { BRAND } from './brand'
 
 export type FlywheelSource =
-  | 'wantzjt'
+  | 'gh_scout'
+  | 'hf_scout'
+  | 'model_pull'
   | 'org'
   | 'implementer'
-  | 'scout_runs'
+  | 'package'
   | 'seed'
 
 export type FlywheelEvent = {
@@ -21,62 +21,82 @@ export type FlywheelEvent = {
   title: string
   detail?: string
   url?: string
+  /** Display label only — never personal handles */
   actor?: string
   repo?: string
   createdAt: string
 }
 
-/** Seed events keep /activity useful when API is rate-limited. */
 export const SEED_EVENTS: FlywheelEvent[] = [
   {
     id: 'seed-vantage-boot',
     source: 'seed',
-    stage: 'vantage',
-    title: 'Vantage Hub online',
-    detail: 'Public hub surface for FTW Lab flywheel stages.',
+    stage: 'discover',
+    title: 'Vantage dual-forge hub online',
+    detail: 'GitHub code lane + Hugging Face model lane on one ops board.',
     actor: BRAND.productHouse,
     repo: 'vantage-hub',
     createdAt: new Date().toISOString(),
   },
   {
-    id: 'seed-scout-pass',
-    source: 'scout_runs',
-    stage: 'scout',
-    title: 'Scout run: public GitHub org inventory',
-    detail: 'Legal public-source scan of org beachhead repos.',
-    actor: 'scout-daemon',
+    id: 'seed-gh-scout',
+    source: 'gh_scout',
+    stage: 'discover',
+    title: 'GH Scout: public org package inventory',
+    detail: 'scout-daemon legal_risk tags · public repos only · rate-limited.',
+    actor: 'gh-scout',
     repo: 'scout-daemon',
-    createdAt: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
+    createdAt: new Date(Date.now() - 1000 * 60 * 20).toISOString(),
+  },
+  {
+    id: 'seed-hf-scout',
+    source: 'hf_scout',
+    stage: 'discover',
+    title: 'HF Scout: CTI / NER query pack',
+    detail: 'Public hub search via huggingface.co/api · User-Agent ftwlab-scout.',
+    actor: 'hf-model-scout',
+    repo: 'FTWLAB',
+    createdAt: new Date(Date.now() - 1000 * 60 * 35).toISOString(),
+  },
+  {
+    id: 'seed-model-pull',
+    source: 'model_pull',
+    stage: 'field',
+    title: 'model_pull: BGE small EN offline fielding',
+    detail: 'Operator-controlled cache · license reviewed · no rehost · TARX-local.',
+    actor: 'field-agent',
+    repo: 'BAAI/bge-small-en-v1.5',
+    createdAt: new Date(Date.now() - 1000 * 60 * 55).toISOString(),
+  },
+  {
+    id: 'seed-model-pull-gguf',
+    source: 'model_pull',
+    stage: 'field',
+    title: 'model_pull: GGUF quant for sovereign SOC lab',
+    detail: 'Offline pull success + docs · no dark phone-home on weights.',
+    actor: 'field-agent',
+    repo: 'TheBloke/Mistral-7B-Instruct-v0.2-GGUF',
+    createdAt: new Date(Date.now() - 1000 * 60 * 90).toISOString(),
   },
   {
     id: 'seed-implementer',
     source: 'implementer',
-    stage: 'implement',
+    stage: 'package',
     title: 'Implementer SDK contract freeze',
-    detail: 'AUP + legal-use headers documented for integrators.',
-    actor: BRAND.humanGithub,
+    detail: 'AUP + legal-use headers · package telemetry only.',
+    actor: 'implementer-sdk',
     repo: 'implementer-sdk',
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(),
   },
   {
-    id: 'seed-bridge',
-    source: 'seed',
-    stage: 'bridge',
-    title: 'TARX bridge: upstream-only posture',
-    detail: 'tarx-bridge documents consume-only upstream integration.',
-    actor: BRAND.humanGithub,
+    id: 'seed-tarx',
+    source: 'package',
+    stage: 'field',
+    title: 'tarx-bridge: upstream-only field notes',
+    detail: 'Local private runtime integrate — do not vendor TARX.',
+    actor: 'tarx-bridge',
     repo: 'tarx-bridge',
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 8).toISOString(),
-  },
-  {
-    id: 'seed-sovereignty',
-    source: 'seed',
-    stage: 'sovereignty',
-    title: 'Sovereignty lab kit published',
-    detail: 'Local-first defaults and evidence checklist.',
-    actor: BRAND.productHouse,
-    repo: 'sovereignty-lab-kit',
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 20).toISOString(),
   },
 ]
 
@@ -86,63 +106,56 @@ type GhEvent = {
   actor?: { login?: string }
   repo?: { name?: string }
   created_at?: string
-  payload?: Record<string, unknown>
 }
 
-function mapGhEvent(
-  e: GhEvent,
-  source: Extract<FlywheelSource, 'wantzjt' | 'org'>,
-): FlywheelEvent {
+function mapOrgEvent(e: GhEvent): FlywheelEvent {
   const type = e.type || 'Event'
   const repo = e.repo?.name
-  const actor = e.actor?.login
   let title = type.replace(/Event$/, '')
-  if (type === 'PushEvent') title = `Push to ${repo ?? 'repo'}`
-  if (type === 'CreateEvent') title = `Created ${repo ?? 'resource'}`
-  if (type === 'WatchEvent') title = `Starred ${repo ?? 'repo'}`
-  if (type === 'IssuesEvent') title = `Issue activity on ${repo ?? 'repo'}`
-  if (type === 'PullRequestEvent') title = `PR activity on ${repo ?? 'repo'}`
-  if (type === 'PublicEvent') title = `Open-sourced ${repo ?? 'repo'}`
+  if (type === 'PushEvent') title = `Org push: ${repo ?? 'repo'}`
+  if (type === 'CreateEvent') title = `Org create: ${repo ?? 'resource'}`
+  if (type === 'PublicEvent') title = `Open-sourced: ${repo ?? 'repo'}`
+  if (type === 'ReleaseEvent') title = `Release: ${repo ?? 'repo'}`
 
   return {
-    id: `gh-${source}-${e.id}`,
-    source,
-    stage: source === 'org' ? 'vantage' : 'implement',
+    id: `gh-org-${e.id}`,
+    source: 'org',
+    stage: 'contribute',
     title,
-    detail: type,
+    detail: 'Public org event only',
     url: repo ? `https://github.com/${repo}` : undefined,
-    actor,
+    actor: BRAND.githubOrg,
     repo,
     createdAt: e.created_at || new Date().toISOString(),
   }
 }
 
-async function fetchPublicEvents(
-  path: string,
+async function fetchOrgEvents(
+  org: string,
   token?: string,
 ): Promise<GhEvent[]> {
   const headers: Record<string, string> = {
     Accept: 'application/vnd.github+json',
-    'User-Agent': 'ftw-lab-vantage-hub',
+    'User-Agent': 'ftwlab-scout',
     'X-GitHub-Api-Version': '2022-11-28',
   }
   if (token) headers.Authorization = `Bearer ${token}`
 
-  const res = await fetch(`https://api.github.com${path}`, {
-    headers,
-    // Public events only — legal OSINT posture
-  })
-  if (!res.ok) {
-    // Rate limit or auth — caller falls back to seed
+  try {
+    const res = await fetch(
+      `https://api.github.com/orgs/${org}/events?per_page=15`,
+      { headers },
+    )
+    if (!res.ok) return []
+    return (await res.json()) as GhEvent[]
+  } catch {
     return []
   }
-  return (await res.json()) as GhEvent[]
 }
 
 export async function loadFlywheelEvents(options?: {
   token?: string
   org?: string
-  human?: string
   limit?: number
 }): Promise<{
   events: FlywheelEvent[]
@@ -150,24 +163,22 @@ export async function loadFlywheelEvents(options?: {
   sources: string[]
 }> {
   const org = options?.org || BRAND.githubOrg
-  const human = options?.human || BRAND.humanGithub
   const token = options?.token
   const limit = options?.limit ?? 40
 
-  const [userEv, orgEv] = await Promise.all([
-    fetchPublicEvents(`/users/${human}/events/public?per_page=20`, token),
-    fetchPublicEvents(`/orgs/${org}/events?per_page=20`, token),
-  ])
-
-  const liveMapped: FlywheelEvent[] = [
-    ...userEv.map((e) => mapGhEvent(e, 'wantzjt')),
-    ...orgEv.map((e) => mapGhEvent(e, 'org')),
-  ]
-
+  const orgEv = await fetchOrgEvents(org, token)
+  const liveMapped = orgEv.map(mapOrgEvent)
   const live = liveMapped.length > 0
-  const sources = new Set<string>(['seed', 'implementer', 'scout_runs'])
-  if (userEv.length) sources.add('wantzjt')
-  if (orgEv.length) sources.add('org')
+
+  const sources = new Set<string>([
+    'seed',
+    'gh_scout',
+    'hf_scout',
+    'model_pull',
+    'implementer',
+    'package',
+  ])
+  if (live) sources.add('org')
 
   const merged = [...liveMapped, ...SEED_EVENTS]
     .sort(
@@ -179,8 +190,7 @@ export async function loadFlywheelEvents(options?: {
   return { events: merged, live, sources: [...sources] }
 }
 
-/** Lightweight pulse for homepage — last few events. */
 export async function loadPulse(token?: string) {
-  const { events, live } = await loadFlywheelEvents({ token, limit: 6 })
+  const { events, live } = await loadFlywheelEvents({ token, limit: 8 })
   return { events, live }
 }

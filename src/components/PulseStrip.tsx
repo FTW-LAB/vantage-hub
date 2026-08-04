@@ -1,50 +1,54 @@
 import type { FlywheelEvent } from '#/lib/flywheel'
 
+const SOURCE_LABEL: Record<string, string> = {
+  gh_scout: 'GH Scout',
+  hf_scout: 'HF Scout',
+  model_pull: 'model_pull',
+  org: 'org',
+  implementer: 'implementer',
+  package: 'package',
+  seed: 'seed',
+}
+
 export function PulseStrip({
   events,
   live,
+  title = 'Dual-forge pulse',
 }: {
   events: FlywheelEvent[]
   live: boolean
+  title?: string
 }) {
   return (
-    <section
-      aria-label="Flywheel pulse"
-      className="rounded-xl border border-white/10 bg-zinc-900/60 p-4"
-    >
-      <div className="mb-3 flex items-center justify-between gap-2">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-400">
-          Live pulse
-        </h2>
-        <span
-          className={
-            live
-              ? 'inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-medium bg-[rgba(56,173,250,0.15)] text-[#38ADFA]'
-              : 'inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-medium bg-zinc-800 text-zinc-400'
-          }
-        >
-          <span
-            className={
-              live
-                ? 'h-1.5 w-1.5 rounded-full bg-[#38ADFA] animate-pulse'
-                : 'h-1.5 w-1.5 rounded-full bg-zinc-500'
-            }
-          />
-          {live ? 'GitHub live' : 'Seed mode'}
+    <section aria-label={title} className="ops-panel p-3 sm:p-4">
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+        <h2 className="ops-label">{title}</h2>
+        <span className={`ops-chip ${live ? 'ops-chip-live' : ''}`}>
+          {live ? 'org live + seed' : 'seed mode'}
         </span>
       </div>
       <ul className="space-y-2">
         {events.map((e) => (
           <li
             key={e.id}
-            className="flex items-start gap-3 rounded-lg border border-white/5 bg-black/20 px-3 py-2"
+            className="flex items-start gap-2.5 border border-[var(--ftw-border)] bg-black/30 px-2.5 py-2"
           >
-            <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-[#38ADFA]" />
+            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--ftw-accent)]" />
             <div className="min-w-0 flex-1">
-              <div className="truncate text-sm text-zinc-100">{e.title}</div>
-              <div className="mt-0.5 flex flex-wrap gap-x-2 text-[11px] text-zinc-500">
-                <span className="text-[#38ADFA]">{e.source}</span>
-                {e.repo ? <span>{e.repo}</span> : null}
+              <div className="text-[13px] leading-snug text-[#e8e8ec] break-words">
+                {e.title}
+              </div>
+              {e.detail ? (
+                <p className="mt-0.5 text-[11px] text-[var(--ftw-muted)] break-words">
+                  {e.detail}
+                </p>
+              ) : null}
+              <div className="mt-1 flex flex-wrap gap-x-2 gap-y-0.5 text-[10px] text-[var(--ftw-label)]">
+                <span className="ops-accent">
+                  {SOURCE_LABEL[e.source] || e.source}
+                </span>
+                <span>{e.stage}</span>
+                {e.repo ? <span className="break-all">{e.repo}</span> : null}
                 <span>{new Date(e.createdAt).toLocaleString()}</span>
               </div>
             </div>

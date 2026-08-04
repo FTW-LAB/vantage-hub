@@ -12,13 +12,14 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: `${BRAND.productHouse} — Sovereign open tooling`,
+        title: `${BRAND.productHouse} · ${BRAND.productHub} — dual-forge ops`,
       },
       {
         name: 'description',
         content: `${BRAND.tagline} ${BRAND.posture}`,
       },
-      { name: 'theme-color', content: BRAND.color },
+      { name: 'theme-color', content: '#050506' },
+      { name: 'robots', content: 'index,follow' },
     ],
     links: [
       { rel: 'stylesheet', href: appCss },

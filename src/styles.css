@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --ftw-blue: #38adfa;
-  --ftw-blue-rgb: 56, 173, 250;
+  /* Cold ops accent — never printed as hex in UI copy */
+  --ftw-accent: #38adfa;
+  --ftw-accent-dim: rgba(56, 173, 250, 0.14);
+  --ftw-void: #050506;
+  --ftw-panel: #0a0a0c;
+  --ftw-border: rgba(255, 255, 255, 0.08);
+  --ftw-muted: #8a8a93;
+  --ftw-label: #6b6b75;
 }
 
 * {
@@ -17,23 +23,109 @@ body,
 
 body {
   margin: 0;
-  background: #09090b;
-  color: #fafafa;
+  background: var(--ftw-void);
+  color: #e8e8ec;
   font-family:
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif;
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    'Liberation Mono',
+    'Courier New',
+    monospace;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
-  color: var(--ftw-blue);
+  color: var(--ftw-accent);
 }
 
 ::selection {
-  background: rgba(56, 173, 250, 0.35);
+  background: var(--ftw-accent-dim);
+}
+
+/* Ops board utilities */
+.ops-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ftw-label);
+  font-weight: 600;
+}
+
+.ops-panel {
+  border: 1px solid var(--ftw-border);
+  background: var(--ftw-panel);
+  border-radius: 2px;
+}
+
+.ops-accent {
+  color: var(--ftw-accent);
+}
+
+.ops-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid var(--ftw-accent);
+  background: var(--ftw-accent-dim);
+  color: var(--ftw-accent);
+  padding: 0.5rem 0.9rem;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.ops-btn:hover {
+  background: rgba(56, 173, 250, 0.22);
+}
+
+.ops-btn-solid {
+  background: var(--ftw-accent);
+  color: #050506;
+  border-color: var(--ftw-accent);
+  font-weight: 700;
+}
+
+.ops-btn-solid:hover {
+  filter: brightness(1.08);
+}
+
+.ops-chip {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--ftw-border);
+  padding: 0.15rem 0.45rem;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ftw-muted);
+  border-radius: 2px;
+}
+
+.ops-chip-live {
+  border-color: rgba(56, 173, 250, 0.35);
+  color: var(--ftw-accent);
+  background: var(--ftw-accent-dim);
+}
+
+/* Mobile: prevent horizontal overflow */
+.ops-shell {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+.ops-pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  font-size: 11px;
+  line-height: 1.45;
+  max-width: 100%;
 }
