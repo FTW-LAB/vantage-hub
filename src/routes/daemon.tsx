@@ -8,99 +8,75 @@ export const Route = createFileRoute('/daemon')({
   component: DaemonPage,
 })
 
-const SCOUT_PROMPT = `You are an FTW Lab fielding agent running GitHub Scout.
+const SCOUT_PROMPT = `You are an FTW Lab fielding agent running GitHub Scout (org FTW-LAB).
 Rules: public repositories only; rate-limited; tag legal_risk; no private access; no credential stuffing.
-1) Inventory public org packages (scout-daemon, implementer-sdk, geolite2-bridge, redirect-intel, tarx-bridge, ecosystem-prompts).
+1) Inventory public org packages under FTW-LAB.
 2) Emit gh_scout events with repo + legal_risk + summary.
-3) Produce agent setup prompts for dual-forge pairing with HF Model Scout.
+3) Pair with HF Model Scout on /models.
 Ethics gate: refuse unauthorized access. MaxMind honesty for geo (city/ASN only).`
 
 function DaemonPage() {
   const data = Route.useLoaderData()
 
   return (
-    <div className="space-y-8">
-      <header className="space-y-3">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="ops-label">GitHub lane · Scout daemon</div>
-          <CopyPage title="Daemon / GH Scout" />
+    <div className="space-y-6">
+      <header className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <div className="ops-label">Discover · scout</div>
+          <h1 className="mt-1 text-xl font-semibold tracking-[0.08em] text-white uppercase">
+            Scout
+          </h1>
+          <p className="mt-1 text-[11px] text-[var(--ftw-label)]">
+            Auto inventory on load · pulse{' '}
+            <span className="ops-accent">{data.pulseMode}</span> · org{' '}
+            {data.brand.githubOrg}
+          </p>
         </div>
-        <h1 className="text-2xl font-semibold tracking-[0.06em] text-white uppercase">
-          Daemon
-        </h1>
-        <p className="max-w-2xl text-sm text-[var(--ftw-muted)]">
-          Public-repo discovery only. Rate-limited. legal_risk tags. Agent setup
-          prompts for dual-forge fielding. Cross-link to HF Models for weights.
-        </p>
-        <div className="flex flex-wrap gap-2">
-          <Link to="/models" className="ops-btn ops-btn-solid no-underline">
-            HF Models
-          </Link>
-          <Link to="/activity" className="ops-btn no-underline">
-            Ops
-          </Link>
-          <a
-            href={`https://github.com/${data.brand.githubOrg}`}
-            className="ops-btn no-underline"
-            rel="noreferrer"
-            target="_blank"
-          >
-            Org repos
-          </a>
-        </div>
+        <CopyPage title="Scout" body={SCOUT_PROMPT} />
       </header>
 
-      <section className="ops-panel p-4">
-        <h2 className="ops-label">GH Scout posture</h2>
-        <ul className="mt-2 list-disc space-y-1 pl-4 text-[12px] text-[var(--ftw-muted)]">
-          <li>Public repositories only</li>
-          <li>Rate-limited hub / API clients</li>
-          <li>legal_risk tags on every hit</li>
-          <li>No personal contributor marketing on the board</li>
-        </ul>
-      </section>
-
-      <section id="packages">
-        <h2 className="ops-label mb-3">Packages</h2>
-        <div className="grid gap-2 sm:grid-cols-2">
-          {data.packages.map((p) => (
-            <div key={p.id} className="ops-panel p-3">
-              <div className="flex flex-wrap gap-2">
-                <span className="ops-chip ops-chip-live">{p.opsRole}</span>
-              </div>
-              <a
-                href={`https://github.com/${data.brand.githubOrg}/${p.label}`}
-                className="mt-2 block font-mono text-sm text-white no-underline hover:underline"
-                rel="noreferrer"
-                target="_blank"
-              >
-                {p.label}
-              </a>
-              <p className="mt-1 text-[11px] text-[var(--ftw-muted)]">
-                {p.description}
-              </p>
-            </div>
-          ))}
+      <section className="ops-panel overflow-x-auto p-0">
+        <div className="border-b border-[var(--ftw-border)] px-3 py-2 ops-label">
+          Packages · {data.packages.length}
         </div>
+        <table className="w-full min-w-[480px] text-left text-[11px]">
+          <tbody>
+            {data.packages.map((p) => (
+              <tr key={p.id} className="border-t border-[var(--ftw-border)]">
+                <td className="px-3 py-2 font-mono text-white">{p.label}</td>
+                <td className="px-3 py-2 text-[var(--ftw-muted)]">{p.opsRole}</td>
+                <td className="px-3 py-2 text-[var(--ftw-muted)]">{p.description}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </section>
 
-      <section>
-        <h2 className="ops-label mb-3">Agent setup</h2>
-        <AgentPrompt title="GitHub Scout agent prompt" prompt={SCOUT_PROMPT} />
+      <section className="ops-panel p-0 overflow-hidden">
+        <div className="border-b border-[var(--ftw-border)] px-3 py-2 ops-label">
+          Org pulse slice · auto
+        </div>
+        {(data.pulseSlice || []).length === 0 ? (
+          <p className="px-3 py-3 text-[12px] text-[var(--ftw-muted)]">
+            No live org events in slice — seed/activity still available on{' '}
+            <Link to="/activity" className="ops-accent">
+              Activity
+            </Link>
+            .
+          </p>
+        ) : (
+          <ul className="divide-y divide-[var(--ftw-border)]">
+            {data.pulseSlice.map((e) => (
+              <li key={e.id} className="px-3 py-2 text-[11px]">
+                <span className="ops-accent">{e.source}</span>{' '}
+                <span className="text-white">{e.title}</span>
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
 
-      <section className="ops-panel p-4">
-        <h2 className="ops-label">Dual-forge pairing</h2>
-        <p className="mt-2 text-[12px] text-[var(--ftw-muted)]">
-          Examples: OpenCTI-style public CTI notes + HF embeddings; WorldMonitor
-          public signals + Whisper (authorized audio only); Scout code inventory +
-          CodeBERT research baselines only. Field models via{' '}
-          <Link to="/models" className="ops-accent">
-            /models
-          </Link>
-          .
-        </p>
-      </section>
+      <AgentPrompt title="Scout agent prompt" prompt={SCOUT_PROMPT} />
     </div>
   )
 }

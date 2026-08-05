@@ -27,7 +27,7 @@ function ToolsPage() {
             >
               {BRAND.githubOrg}
             </a>
-            . Same slugs as repos, flywheel seeds, and use-case joins.
+            . Same slugs as repos, activity seeds, and use-case joins.
           </p>
         </div>
         <CopyPage

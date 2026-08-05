@@ -25,7 +25,7 @@ export const BRAND = {
   tagline: 'Dual-forge sovereign tooling. Code on GitHub. Weights on Hugging Face.',
   posture:
     'Legal public-source only. Authorized use. MaxMind honesty. HF license respect.',
-  doctrine: 'Discover → Contribute → Package → Field → Compound',
+  doctrine: 'Discover · Build · Field',
 } as const
 
 /** @deprecated prefer REPOS from packages.ts — kept for daemon page compat */
@@ -36,13 +36,17 @@ export const GH_PACKAGES = REPOS.map((r) => ({
   description: r.summary,
 }))
 
-export const FLYWHEEL_STAGES = [
+/** Internal stage labels (not user-facing "flywheel" marketing) */
+export const ACTIVITY_STAGES = [
   { id: 'discover', label: 'Discover', detail: 'GH Scout + HF Scout (public only)' },
   { id: 'contribute', label: 'Contribute', detail: 'Patches, datasets, eval notes' },
   { id: 'package', label: 'Package', detail: 'SDKs, bridges, catalog rows' },
   { id: 'field', label: 'Field', detail: 'Clone repo or pull model to TARX-local' },
-  { id: 'compound', label: 'Compound', detail: 'Ops flywheel + offline evidence' },
+  { id: 'compound', label: 'Compound', detail: 'Activity merge + offline evidence' },
 ] as const
+
+/** @deprecated use ACTIVITY_STAGES */
+export const FLYWHEEL_STAGES = ACTIVITY_STAGES
 
 /** Reserved route tokens for short-code hygiene */
 export const ROUTE_TOKENS = [

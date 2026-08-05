@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { FLYWHEEL_STAGES } from '#/lib/brand'
 import { getActivity } from '#/lib/activity-api'
 import { CopyPage } from '#/components/CopyPage'
 
@@ -22,74 +21,62 @@ function ActivityPage() {
   const data = Route.useLoaderData()
 
   return (
-    <div className="space-y-8">
-      <header className="space-y-3">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="ops-label">Ops · dual-forge flywheel</div>
-          <CopyPage title="Activity flywheel" />
+    <div className="space-y-6">
+      <header className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <div className="ops-label">Field · activity</div>
+          <h1 className="mt-1 text-xl font-semibold tracking-[0.08em] text-white uppercase">
+            Activity
+          </h1>
+          <p className="mt-1 text-[11px] text-[var(--ftw-label)]">
+            Auto-merge on load · mode{' '}
+            <span className="ops-accent">{data.mode}</span> ·{' '}
+            {data.fetchedAt
+              ? new Date(data.fetchedAt).toLocaleString()
+              : '—'}
+          </p>
         </div>
-        <h1 className="text-2xl font-semibold tracking-[0.06em] text-white uppercase">
-          Activity
-        </h1>
-        <p className="max-w-2xl text-sm text-[var(--ftw-muted)]">
-          Pulse control plane: GitHub org events + Hugging Face public search + site
-          ledger. Mode{' '}
-          <strong className="text-white">{data.mode || (data.live ? 'HYBRID' : 'SEED')}</strong>
-          . Seed fills gaps — never personal handles.
-        </p>
-        <div className="grid gap-2 sm:grid-cols-3">
-          {(data.sourceCards || []).map((c) => (
-            <div key={c.id} className="ops-panel p-3">
-              <div className="ops-label">{c.label}</div>
-              <div className="mt-1 flex items-baseline justify-between gap-2">
-                <span
-                  className={`ops-chip ${c.status === 'live' ? 'ops-chip-live' : ''}`}
-                >
-                  {c.status}
-                </span>
-                <span className="font-mono text-lg text-white">{c.count}</span>
-              </div>
-              <p className="mt-1 text-[10px] text-[var(--ftw-label)] break-all">
-                {c.detail}
-              </p>
-            </div>
-          ))}
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Link to="/models" className="ops-btn no-underline">
-            HF Scout
-          </Link>
-          <Link to="/daemon" className="ops-btn no-underline">
-            GH Scout
-          </Link>
-          <Link to="/links" className="ops-btn no-underline">
-            Links ledger
-          </Link>
-        </div>
+        <CopyPage title="Activity" />
       </header>
 
-      <section>
-        <h2 className="ops-label mb-3">Stages</h2>
-        <ol className="grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
-          {FLYWHEEL_STAGES.map((s, i) => (
-            <li key={s.id} className="ops-panel p-3">
-              <span className="ops-accent text-[10px]">
-                {String(i + 1).padStart(2, '0')}
+      <div className="grid gap-2 sm:grid-cols-3">
+        {(data.sourceCards || []).map((c) => (
+          <div key={c.id} className="ops-panel p-3">
+            <div className="ops-label">{c.label}</div>
+            <div className="mt-1 flex items-baseline justify-between gap-2">
+              <span
+                className={`ops-chip ${c.status === 'live' ? 'ops-chip-live' : ''}`}
+              >
+                {c.status}
               </span>
-              <div className="mt-1 text-xs font-semibold text-white uppercase tracking-wide">
-                {s.label}
-              </div>
-              <p className="mt-1 text-[11px] text-[var(--ftw-muted)]">{s.detail}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
+              <span className="font-mono text-lg text-white">{c.count}</span>
+            </div>
+            <p className="mt-1 text-[10px] text-[var(--ftw-label)] break-all">
+              {c.detail}
+            </p>
+          </div>
+        ))}
+      </div>
 
-      <section>
-        <h2 className="ops-label mb-3">Event stream</h2>
-        <ul className="divide-y divide-[var(--ftw-border)] border border-[var(--ftw-border)] bg-[var(--ftw-panel)]">
+      <div className="flex flex-wrap gap-2 text-[11px]">
+        <Link to="/daemon" className="ops-btn no-underline">
+          Scout
+        </Link>
+        <Link to="/models" className="ops-btn no-underline">
+          Models
+        </Link>
+        <Link to="/links" className="ops-btn no-underline">
+          Links
+        </Link>
+      </div>
+
+      <section className="ops-panel overflow-hidden p-0">
+        <div className="border-b border-[var(--ftw-border)] px-3 py-2 ops-label">
+          Event stream · {data.events.length}
+        </div>
+        <ul className="divide-y divide-[var(--ftw-border)]">
           {data.events.map((e) => (
-            <li key={e.id} className="px-3 py-3 sm:px-4">
+            <li key={e.id} className="px-3 py-2.5">
               <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <div className="text-[13px] text-white break-words">{e.title}</div>
                 <time className="text-[10px] text-[var(--ftw-label)] shrink-0">
@@ -97,27 +84,16 @@ function ActivityPage() {
                 </time>
               </div>
               {e.detail ? (
-                <p className="mt-1 text-[11px] text-[var(--ftw-muted)] break-words">
+                <p className="mt-0.5 text-[11px] text-[var(--ftw-muted)] break-words">
                   {e.detail}
                 </p>
               ) : null}
-              <div className="mt-1.5 flex flex-wrap gap-2 text-[10px] text-[var(--ftw-label)]">
+              <div className="mt-1 flex flex-wrap gap-2 text-[10px] text-[var(--ftw-label)]">
                 <span className="ops-chip ops-chip-live">
                   {SOURCE_LABEL[e.source] || e.source}
                 </span>
                 <span className="ops-chip">{e.stage}</span>
-                {e.actor ? <span>{e.actor}</span> : null}
                 {e.repo ? <span className="break-all">{e.repo}</span> : null}
-                {e.url ? (
-                  <a
-                    href={e.url}
-                    className="ops-accent no-underline hover:underline"
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    open
-                  </a>
-                ) : null}
               </div>
             </li>
           ))}

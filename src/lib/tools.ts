@@ -40,11 +40,11 @@ export const TOOLS: ToolEntry[] = [
   },
   ...packageTools,
   {
-    id: 'ops-flywheel',
-    name: 'Ops Flywheel',
+    id: 'ops-activity',
+    name: 'Activity',
     lane: 'bridge',
-    opsRole: 'Compound',
+    opsRole: 'Field',
     href: '/activity',
-    summary: 'Dual-forge pulse: GH Scout + HF Scout + model_pull + package events.',
+    summary: 'Activity merge: GH Scout + HF Scout + model_pull + package events.',
   },
 ]

@@ -1,16 +1,33 @@
 import { Link } from '@tanstack/react-router'
 import { BRAND } from '#/lib/brand'
 
-const nav = [
-  { to: '/', label: 'Home', exact: true },
-  { to: '/tools', label: 'Tools' },
-  { to: '/models', label: 'Models' },
-  { to: '/daemon', label: 'Daemon' },
-  { to: '/links', label: 'Links' },
-  { to: '/use-cases', label: 'Use-cases' },
-  { to: '/activity', label: 'Ops' },
-  { to: '/security', label: 'Security' },
-] as const
+type NavItem = { to: string; label: string; exact?: boolean }
+
+const NAV: { group: string; items: NavItem[] }[] = [
+  {
+    group: 'Discover',
+    items: [
+      { to: '/daemon', label: 'Scout' },
+      { to: '/models', label: 'Models' },
+      { to: '/use-cases', label: 'Ecosystem' },
+    ],
+  },
+  {
+    group: 'Build',
+    items: [
+      { to: '/tools', label: 'Packages' },
+      { to: '/use-cases', label: 'Cases' },
+      { to: '/security', label: 'Docs' },
+    ],
+  },
+  {
+    group: 'Field',
+    items: [
+      { to: '/links', label: 'Links' },
+      { to: '/activity', label: 'Activity' },
+    ],
+  },
+]
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   return (
@@ -22,7 +39,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
         </div>
       </div>
       <header className="sticky top-0 z-40 border-b border-[var(--ftw-border)] bg-[rgba(5,5,6,0.92)] backdrop-blur">
-        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-3 py-3 sm:px-4">
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-3 py-2.5 sm:px-4">
           <Link to="/" className="flex min-w-0 items-center gap-2.5 no-underline">
             <img
               src={BRAND.logoPath}
@@ -35,37 +52,42 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
               <div className="truncate text-xs font-semibold tracking-[0.12em] text-white uppercase">
                 {BRAND.productHouse}
               </div>
-              <div className="ops-label truncate">
-                {BRAND.productHub} · dual-forge
-              </div>
+              <div className="ops-label truncate">{BRAND.productHub}</div>
             </div>
           </Link>
-          <nav className="flex max-w-full flex-wrap items-center gap-0.5 sm:gap-1">
-            {nav.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className="rounded-sm px-2 py-1.5 text-[11px] tracking-[0.1em] text-[var(--ftw-muted)] uppercase no-underline hover:bg-white/5 hover:text-white [&.active]:bg-[var(--ftw-accent-dim)] [&.active]:text-[var(--ftw-accent)] sm:px-2.5"
-                activeOptions={{ exact: 'exact' in item ? item.exact : false }}
-              >
-                {item.label}
-              </Link>
+          <nav className="flex max-w-full flex-wrap items-start gap-x-4 gap-y-2">
+            {NAV.map((g) => (
+              <div key={g.group} className="flex flex-col gap-0.5">
+                <span className="ops-label px-1">{g.group}</span>
+                <div className="flex flex-wrap gap-0.5">
+                  {g.items.map((item) => (
+                    <Link
+                      key={`${g.group}-${item.to}-${item.label}`}
+                      to={item.to}
+                      className="rounded-sm px-2 py-1 text-[11px] tracking-[0.1em] text-[var(--ftw-muted)] uppercase no-underline hover:bg-white/5 hover:text-white [&.active]:bg-[var(--ftw-accent-dim)] [&.active]:text-[var(--ftw-accent)]"
+                      activeOptions={{ exact: item.exact ?? false }}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
             ))}
           </nav>
         </div>
       </header>
 
-      <main className="mx-auto max-w-5xl px-3 py-8 sm:px-4 sm:py-10">{children}</main>
+      <main className="mx-auto max-w-5xl px-3 py-6 sm:px-4 sm:py-8">{children}</main>
 
-      <footer className="border-t border-[var(--ftw-border)] py-6">
-        <div className="mx-auto flex max-w-5xl flex-col gap-2 px-3 text-[11px] text-[var(--ftw-label)] sm:flex-row sm:items-center sm:justify-between sm:px-4">
-          <p className="tracking-wide">
-            {BRAND.productHouse} · unclassified ops board · {BRAND.domain} ·{' '}
+      <footer className="border-t border-[var(--ftw-border)] py-5">
+        <div className="mx-auto flex max-w-5xl flex-col gap-1 px-3 text-[10px] text-[var(--ftw-label)] sm:flex-row sm:items-center sm:justify-between sm:px-4">
+          <p className="tracking-wide uppercase">
+            {BRAND.productHouse} · {BRAND.productHub} ·{' '}
             <Link to="/legal" className="ops-accent no-underline">
               legal
             </Link>
           </p>
-          <p className="max-w-md text-[10px] leading-relaxed">{BRAND.posture}</p>
+          <p className="max-w-md leading-relaxed">{BRAND.posture}</p>
         </div>
       </footer>
     </div>

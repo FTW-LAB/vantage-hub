@@ -1,10 +1,7 @@
+import { useMemo, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { FLYWHEEL_STAGES } from '#/lib/brand'
 import { getHomeData } from '#/lib/activity-api'
-import { PulseStrip } from '#/components/PulseStrip'
 import { CopyPage } from '#/components/CopyPage'
-import { REPOS } from '#/lib/packages'
-import { CURATED_HF } from '#/lib/hf-catalog'
 
 export const Route = createFileRoute('/')({
   loader: () => getHomeData(),
@@ -13,52 +10,133 @@ export const Route = createFileRoute('/')({
 
 function Home() {
   const data = Route.useLoaderData()
+  const [q, setQ] = useState('')
+  const [lane, setLane] = useState<'all' | 'github' | 'huggingface' | 'bridge'>(
+    'all',
+  )
+
+  const filteredPkgs = useMemo(() => {
+    const qq = q.trim().toLowerCase()
+    return data.packages.filter((p) => {
+      if (qq && !`${p.id} ${p.summary} ${p.opsRole}`.toLowerCase().includes(qq))
+        return false
+      return true
+    })
+  }, [data.packages, q])
+
+  const filteredModels = useMemo(() => {
+    const qq = q.trim().toLowerCase()
+    return data.curated.filter((m) => {
+      if (
+        qq &&
+        !`${m.title} ${m.repoId} ${m.infosecUse} ${m.queryPack}`
+          .toLowerCase()
+          .includes(qq)
+      )
+        return false
+      return true
+    })
+  }, [data.curated, q])
+
+  const filteredTools = useMemo(() => {
+    const qq = q.trim().toLowerCase()
+    return data.tools.filter((t) => {
+      if (lane !== 'all' && t.lane !== lane) return false
+      if (qq && !`${t.id} ${t.name} ${t.summary}`.toLowerCase().includes(qq))
+        return false
+      return true
+    })
+  }, [data.tools, q, lane])
 
   return (
-    <div className="space-y-10">
-      <section className="space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="ops-label">Unclassified · product hub</div>
-          <CopyPage
-            title="Home"
-            body={`Packages: ${REPOS.map((r) => r.id).join(', ')}\nHF curated: ${CURATED_HF.map((m) => m.repoId).join(', ')}`}
-          />
-        </div>
-        <h1 className="text-2xl font-semibold tracking-[0.06em] text-white uppercase sm:text-3xl">
-          {data.productHouse}
-          <span className="block text-[var(--ftw-muted)] sm:inline sm:before:content-['·_']">
+    <div className="space-y-6">
+      <header className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <div className="ops-label">Catalog console</div>
+          <h1 className="mt-1 text-xl font-semibold tracking-[0.08em] text-white uppercase sm:text-2xl">
             {data.productHub}
-          </span>
-        </h1>
-        <p className="max-w-2xl text-sm leading-relaxed text-[var(--ftw-muted)]">
-          {data.tagline}
-        </p>
-        <p className="ops-label">{data.doctrine}</p>
-        <div className="flex flex-wrap gap-2">
-          <Link to="/models" className="ops-btn ops-btn-solid no-underline">
-            HF Models
-          </Link>
-          <Link to="/tools" className="ops-btn no-underline">
-            Packages
-          </Link>
-          <Link to="/daemon" className="ops-btn no-underline">
-            GH Daemon
-          </Link>
-          <Link to="/activity" className="ops-btn no-underline">
-            Ops flywheel
-          </Link>
+          </h1>
+          <p className="mt-1 text-[11px] text-[var(--ftw-label)]">
+            Auto-boot · scout warm · activity merge
+            {data.boot?.throttled ? ' · throttled' : ''} · pulse{' '}
+            <span className="ops-accent">{data.pulse.mode}</span>
+            {typeof data.boot?.hfHits === 'number'
+              ? ` · hf hits ${data.boot.hfHits}`
+              : ''}
+          </p>
         </div>
-      </section>
+        <CopyPage
+          title="Catalog"
+          body={`mode=${data.pulse.mode}\npkgs=${data.packages.map((p) => p.id).join(',')}`}
+        />
+      </header>
 
-      <section className="ops-panel overflow-x-auto p-3 sm:p-4">
-        <div className="ops-label mb-2">Packages (clone)</div>
-        <table className="w-full min-w-[520px] text-left text-[11px]">
+      {/* Source status — not marketing pills */}
+      <div className="grid grid-cols-3 gap-2">
+        {(data.pulse.sourceCards || []).map((c) => (
+          <div
+            key={c.id}
+            className="border border-[var(--ftw-border)] bg-[var(--ftw-panel)] px-2 py-2"
+          >
+            <div className="ops-label truncate">{c.label}</div>
+            <div className="mt-1 flex justify-between font-mono text-[12px]">
+              <span className={c.status === 'live' ? 'ops-accent' : 'text-[var(--ftw-muted)]'}>
+                {c.status}
+              </span>
+              <span className="text-white">{c.count}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Filter bar */}
+      <div className="flex flex-wrap items-center gap-2">
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Filter catalog…"
+          className="min-w-[12rem] flex-1 border border-[var(--ftw-border)] bg-black/40 px-3 py-2 font-mono text-[12px] text-white outline-none focus:border-[var(--ftw-accent)]"
+          aria-label="Filter catalog"
+        />
+        {(['all', 'github', 'huggingface', 'bridge'] as const).map((l) => (
+          <button
+            key={l}
+            type="button"
+            className={`ops-btn ${lane === l ? 'ops-btn-solid' : ''}`}
+            onClick={() => setLane(l)}
+          >
+            {l}
+          </button>
+        ))}
+      </div>
+
+      {/* Packages table */}
+      <section className="ops-panel overflow-x-auto p-0">
+        <div className="border-b border-[var(--ftw-border)] px-3 py-2 ops-label">
+          Packages · {filteredPkgs.length}
+        </div>
+        <table className="w-full min-w-[560px] text-left text-[11px]">
+          <thead>
+            <tr className="border-b border-[var(--ftw-border)] text-[var(--ftw-label)]">
+              <th className="px-3 py-2 font-medium">ID</th>
+              <th className="px-3 py-2 font-medium">Role</th>
+              <th className="px-3 py-2 font-medium">Clone</th>
+            </tr>
+          </thead>
           <tbody>
-            {REPOS.map((r) => (
-              <tr key={r.id} className="border-t border-[var(--ftw-border)]">
-                <td className="py-1.5 pr-3 font-mono text-white">{r.id}</td>
-                <td className="ops-pre py-1.5 text-[10px] text-[var(--ftw-muted)]">
-                  {r.clone}
+            {filteredPkgs.map((p) => (
+              <tr key={p.id} className="border-t border-[var(--ftw-border)]">
+                <td className="px-3 py-2">
+                  <Link
+                    to="/tools"
+                    className="font-mono text-white no-underline hover:ops-accent"
+                  >
+                    {p.id}
+                  </Link>
+                </td>
+                <td className="px-3 py-2 text-[var(--ftw-muted)]">{p.opsRole}</td>
+                <td className="ops-pre px-3 py-2 text-[10px] text-[var(--ftw-muted)]">
+                  {p.clone}
                 </td>
               </tr>
             ))}
@@ -66,141 +144,83 @@ function Home() {
         </table>
       </section>
 
-      <section className="ops-panel overflow-x-auto p-3 sm:p-4">
-        <div className="ops-label mb-2">HF curated (public hub)</div>
-        <table className="w-full min-w-[480px] text-left text-[11px]">
+      {/* Models table */}
+      <section className="ops-panel overflow-x-auto p-0">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--ftw-border)] px-3 py-2">
+          <span className="ops-label">Models · {filteredModels.length}</span>
+          <Link to="/models" className="text-[10px] uppercase tracking-wide ops-accent no-underline">
+            open models
+          </Link>
+        </div>
+        <table className="w-full min-w-[520px] text-left text-[11px]">
+          <thead>
+            <tr className="border-b border-[var(--ftw-border)] text-[var(--ftw-label)]">
+              <th className="px-3 py-2 font-medium">Title</th>
+              <th className="px-3 py-2 font-medium">Hub id</th>
+              <th className="px-3 py-2 font-medium">Risk</th>
+              <th className="px-3 py-2 font-medium">Scope</th>
+            </tr>
+          </thead>
           <tbody>
-            {CURATED_HF.map((m) => (
+            {filteredModels.map((m) => (
               <tr key={m.id} className="border-t border-[var(--ftw-border)]">
-                <td className="py-1.5 pr-3 text-white">{m.title}</td>
-                <td className="py-1.5 pr-3 font-mono text-[var(--ftw-muted)] break-all">
+                <td className="px-3 py-2 text-white">{m.title}</td>
+                <td className="px-3 py-2 font-mono text-[var(--ftw-muted)] break-all">
                   {m.repoId}
                 </td>
-                <td className="py-1.5 text-[var(--ftw-label)]">{m.catalogScope}</td>
+                <td className="px-3 py-2 text-[var(--ftw-muted)]">{m.legalRisk}</td>
+                <td className="px-3 py-2 text-[var(--ftw-label)]">{m.catalogScope}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </section>
 
-      <section className="grid gap-3 sm:grid-cols-2">
-        <div className="ops-panel p-4">
-          <div className="ops-label">GitHub lane</div>
-          <p className="mt-2 text-sm text-white">Code · packages · public Scout</p>
-          <p className="mt-1 text-[12px] text-[var(--ftw-muted)]">
-            Org repos under {data.githubOrg}. Rate-limited public discovery only.
-          </p>
-          <Link
-            to="/daemon"
-            className="mt-3 inline-block text-[11px] tracking-wide uppercase no-underline ops-accent"
-          >
-            Open daemon →
-          </Link>
+      {/* Tools / surfaces table */}
+      <section className="ops-panel overflow-x-auto p-0">
+        <div className="border-b border-[var(--ftw-border)] px-3 py-2 ops-label">
+          Surfaces · {filteredTools.length}
         </div>
-        <div className="ops-panel p-4">
-          <div className="ops-label">Hugging Face lane</div>
-          <p className="mt-2 text-sm text-white">Models · datasets · spaces</p>
-          <p className="mt-1 text-[12px] text-[var(--ftw-muted)]">
-            Hub account {data.hfOrg}. License-respecting offline fielding.
-          </p>
-          <a
-            href={data.hfUrl}
-            className="mt-1 block break-all text-[11px] no-underline ops-accent"
-            rel="noreferrer"
-            target="_blank"
-          >
-            {data.hfUrl}
-          </a>
-          <Link
-            to="/models"
-            className="mt-3 inline-block text-[11px] tracking-wide uppercase no-underline ops-accent"
-          >
-            Open models →
-          </Link>
-        </div>
+        <table className="w-full min-w-[480px] text-left text-[11px]">
+          <tbody>
+            {filteredTools.map((t) => (
+              <tr key={t.id} className="border-t border-[var(--ftw-border)]">
+                <td className="px-3 py-2">
+                  <Link
+                    to={t.href.startsWith('/') ? t.href.split('#')[0] : '/'}
+                    className="text-white no-underline hover:underline"
+                  >
+                    {t.name}
+                  </Link>
+                </td>
+                <td className="px-3 py-2 text-[var(--ftw-label)]">{t.lane}</td>
+                <td className="px-3 py-2 text-[var(--ftw-muted)]">{t.opsRole}</td>
+                <td className="px-3 py-2 text-[var(--ftw-muted)]">{t.summary}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </section>
 
-      <section className="ops-panel p-3 sm:p-4">
-        <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-          <h2 className="ops-label">Pulse</h2>
-          <span
-            className={`ops-chip ${data.pulse.mode && data.pulse.mode !== 'SEED' ? 'ops-chip-live' : ''}`}
-          >
-            {data.pulse.mode || (data.pulse.live ? 'HYBRID' : 'SEED')}
-          </span>
+      {/* Activity slice — not marketing stages */}
+      <section className="ops-panel p-3">
+        <div className="mb-2 flex items-center justify-between">
+          <span className="ops-label">Activity</span>
+          <Link to="/activity" className="text-[10px] uppercase ops-accent no-underline">
+            open
+          </Link>
         </div>
-        <div className="mb-3 grid gap-2 sm:grid-cols-3">
-          {(data.pulse.sourceCards || []).map((c) => (
-            <div
-              key={c.id}
-              className="border border-[var(--ftw-border)] bg-black/30 px-2 py-2"
+        <ul className="space-y-1">
+          {data.pulse.events.slice(0, 6).map((e) => (
+            <li
+              key={e.id}
+              className="border border-[var(--ftw-border)] bg-black/20 px-2 py-1.5 text-[11px]"
             >
-              <div className="ops-label">{c.label}</div>
-              <div className="mt-1 flex justify-between text-[12px]">
-                <span className={c.status === 'live' ? 'ops-accent' : ''}>
-                  {c.status}
-                </span>
-                <span className="font-mono text-white">{c.count}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-        <PulseStrip
-          events={data.pulse.events}
-          live={data.pulse.live}
-          title="Event slice"
-        />
-      </section>
-
-      <section>
-        <h2 className="ops-label mb-3">Flywheel</h2>
-        <ol className="grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
-          {FLYWHEEL_STAGES.map((s, i) => (
-            <li key={s.id} className="ops-panel p-3">
-              <div className="ops-accent text-[10px] tracking-widest">
-                {String(i + 1).padStart(2, '0')}
-              </div>
-              <div className="mt-1 text-xs font-semibold tracking-wide text-white uppercase">
-                {s.label}
-              </div>
-              <p className="mt-1 text-[11px] text-[var(--ftw-muted)]">{s.detail}</p>
+              <span className="ops-accent">{e.source}</span>{' '}
+              <span className="text-white">{e.title}</span>
             </li>
           ))}
-        </ol>
-      </section>
-
-      <section id="tools">
-        <h2 className="ops-label mb-3">Tools catalog</h2>
-        <div className="grid gap-2 sm:grid-cols-2">
-          {data.tools.map((t) => (
-            <Link
-              key={t.id}
-              to={t.href.startsWith('/') ? t.href.split('#')[0] : '/'}
-              className="ops-panel block p-3 no-underline transition-colors hover:border-[rgba(56,173,250,0.25)]"
-            >
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="ops-chip">{t.lane}</span>
-                <span className="ops-chip ops-chip-live">{t.opsRole}</span>
-              </div>
-              <div className="mt-2 text-sm text-white">{t.name}</div>
-              <p className="mt-1 text-[11px] text-[var(--ftw-muted)]">{t.summary}</p>
-              {t.id === 'hf-model-scout' ? (
-                <span className="mt-2 inline-block text-[10px] ops-accent">
-                  id: hf-model-scout
-                </span>
-              ) : null}
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="ops-panel p-4">
-        <div className="ops-label">Sovereign stack</div>
-        <p className="mt-2 text-[12px] leading-relaxed text-[var(--ftw-muted)]">
-          GitHub × Hugging Face as one dual-forge: public discovery, local inference
-          on TARX-upstream metal, offline geo (city/ASN only — no household GeoIP).
-          No consulting arm. No personal contributor marketing.
-        </p>
+        </ul>
       </section>
     </div>
   )

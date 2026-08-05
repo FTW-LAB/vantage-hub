@@ -1,5 +1,4 @@
 import { createServerFn } from '@tanstack/react-start'
-import { loadFlywheelEvents } from './flywheel'
 import { getFlywheelPulse } from './pulse-core'
 import { runHfScout } from './hf-scout'
 import { BRAND, GH_PACKAGES } from './brand'
@@ -8,6 +7,8 @@ import { TOOLS } from './tools'
 import { recordLedger, listLedger } from './site-ledger'
 import { findLink, SHORT_LINKS } from './links'
 import { REPOS } from './packages'
+import { warmConsoleBoot } from './boot'
+import { USE_CASES } from './use-cases'
 
 function serverToken(): string | undefined {
   return process.env.GITHUB_TOKEN || process.env.GH_TOKEN || undefined
@@ -17,12 +18,14 @@ export const getActivity = createServerFn({ method: 'GET' }).handler(
   async () => {
     const pulse = await getFlywheelPulse({ token: serverToken() })
     return {
-      ...pulse,
-      // compat with older activity page fields
+      mode: pulse.mode,
       live: pulse.mode !== 'SEED',
-      sources: pulse.sources.map((s) => s.id),
       sourceCards: pulse.sources,
+      sources: pulse.sources.map((s) => s.id),
       events: pulse.events,
+      classification: pulse.classification,
+      stack: pulse.stack,
+      fetchedAt: pulse.fetchedAt,
     }
   },
 )
@@ -48,6 +51,7 @@ export const getHfScout = createServerFn({ method: 'GET' })
 
 export const getModelsPage = createServerFn({ method: 'GET' }).handler(
   async () => {
+    // Auto-scout on load (no human Run CTA)
     const scout = await runHfScout('cti-ner')
     return {
       scout,
@@ -66,6 +70,8 @@ export const getModelsPage = createServerFn({ method: 'GET' }).handler(
 
 export const getDaemonPage = createServerFn({ method: 'GET' }).handler(
   async () => {
+    // Auto inventory warm
+    const pulse = await getFlywheelPulse({ token: serverToken() })
     return {
       packages: GH_PACKAGES,
       tools: TOOLS.filter((t) => t.lane === 'github' || t.lane === 'bridge'),
@@ -74,16 +80,22 @@ export const getDaemonPage = createServerFn({ method: 'GET' }).handler(
         githubOrg: BRAND.githubOrg,
         doctrine: BRAND.doctrine,
       },
+      pulseSlice: pulse.events
+        .filter((e) => e.source === 'org' || e.source === 'gh_scout' || e.source === 'package')
+        .slice(0, 12),
+      pulseMode: pulse.mode,
     }
   },
 )
 
 export const getHomeData = createServerFn({ method: 'GET' }).handler(
   async () => {
-    const pulse = await getFlywheelPulse({ token: serverToken() })
+    // Zero-human open: warm ledger + scouts + activity merge
+    const boot = await warmConsoleBoot(serverToken())
+    const pulse = boot.pulse
     return {
       pulse: {
-        events: pulse.events.slice(0, 8),
+        events: pulse.events.slice(0, 10),
         live: pulse.mode !== 'SEED',
         mode: pulse.mode,
         sourceCards: pulse.sources,
@@ -92,6 +104,9 @@ export const getHomeData = createServerFn({ method: 'GET' }).handler(
         fetchedAt: pulse.fetchedAt,
       },
       tools: TOOLS,
+      packages: REPOS,
+      curated: CURATED_HF,
+      cases: USE_CASES,
       doctrine: BRAND.doctrine,
       tagline: BRAND.tagline,
       productHouse: BRAND.productHouse,
@@ -101,6 +116,12 @@ export const getHomeData = createServerFn({ method: 'GET' }).handler(
       hfUrl: BRAND.hfUrl,
       classification: pulse.classification,
       stack: pulse.stack,
+      boot: {
+        throttled: boot.throttled,
+        bootedAt: boot.bootedAt,
+        hfMode: boot.hf.mode,
+        hfHits: boot.hf.hits.length,
+      },
     }
   },
 )
@@ -130,6 +151,3 @@ export const hitShortLink = createServerFn({ method: 'POST' })
     recordLedger('access_event', `/${link.token}`, 'field proof tick')
     return { ok: true as const, target: link.target, token: link.token }
   })
-
-// keep unused import quiet if tree shakes
-void loadFlywheelEvents
