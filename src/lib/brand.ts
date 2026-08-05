@@ -22,7 +22,7 @@ export const BRAND = {
     'https://github.com/securist',
   hfOrg: (import.meta.env.VITE_PUBLIC_HF_ORG as string | undefined) || 'securist',
   hfUrl: 'https://huggingface.co/securist',
-  logoPath: '/ftw-logo.png',
+  logoPath: '/securist-logo.png',
   tagline: 'Dual-forge sovereign tooling. Code on GitHub. Weights on Hugging Face.',
   posture:
     'Legal public-source only. Authorized use. MaxMind honesty. HF license respect.',
