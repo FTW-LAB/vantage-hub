@@ -120,7 +120,37 @@ function Home() {
         </div>
       </section>
 
-      <PulseStrip events={data.pulse.events} live={data.pulse.live} />
+      <section className="ops-panel p-3 sm:p-4">
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+          <h2 className="ops-label">Pulse</h2>
+          <span
+            className={`ops-chip ${data.pulse.mode && data.pulse.mode !== 'SEED' ? 'ops-chip-live' : ''}`}
+          >
+            {data.pulse.mode || (data.pulse.live ? 'HYBRID' : 'SEED')}
+          </span>
+        </div>
+        <div className="mb-3 grid gap-2 sm:grid-cols-3">
+          {(data.pulse.sourceCards || []).map((c) => (
+            <div
+              key={c.id}
+              className="border border-[var(--ftw-border)] bg-black/30 px-2 py-2"
+            >
+              <div className="ops-label">{c.label}</div>
+              <div className="mt-1 flex justify-between text-[12px]">
+                <span className={c.status === 'live' ? 'ops-accent' : ''}>
+                  {c.status}
+                </span>
+                <span className="font-mono text-white">{c.count}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+        <PulseStrip
+          events={data.pulse.events}
+          live={data.pulse.live}
+          title="Event slice"
+        />
+      </section>
 
       <section>
         <h2 className="ops-label mb-3">Flywheel</h2>

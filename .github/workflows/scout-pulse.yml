@@ -1,0 +1,30 @@
+name: scout-pulse
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  pulse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Public GH + HF pulse snapshot
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p pulse
+          DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          printf '{"ts":"%s","org":"FTW-LAB","plane":"scout-pulse"}\n' "$DATE" > pulse/latest.json
+          curl -sS -H "Accept: application/vnd.github+json" -H "User-Agent: ftwlab-scout" \
+            "https://api.github.com/search/repositories?q=infosec+osint+in:name,description&per_page=5" \
+            | head -c 50000 > pulse/gh-search-sample.json || true
+          curl -sS -A "ftwlab-scout (+https://ftwlab.com)" \
+            "https://huggingface.co/api/models?search=cybersecurity&limit=5" \
+            | head -c 50000 > pulse/hf-search-sample.json || true
+          echo "Pulse snapshot written at $DATE"
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: scout-pulse
+          path: pulse/

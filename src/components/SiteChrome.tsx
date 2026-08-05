@@ -6,6 +6,7 @@ const nav = [
   { to: '/tools', label: 'Tools' },
   { to: '/models', label: 'Models' },
   { to: '/daemon', label: 'Daemon' },
+  { to: '/links', label: 'Links' },
   { to: '/use-cases', label: 'Use-cases' },
   { to: '/activity', label: 'Ops' },
   { to: '/security', label: 'Security' },
@@ -14,6 +15,12 @@ const nav = [
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   return (
     <div className="ops-shell min-h-screen bg-[var(--ftw-void)] text-[#e8e8ec]">
+      <div className="border-b border-[var(--ftw-border)] bg-black/50">
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-3 py-1.5 text-[10px] tracking-[0.12em] text-[var(--ftw-label)] uppercase sm:px-4">
+          <span className="ops-accent">UNCLASSIFIED // PUBLIC SOURCE</span>
+          <span className="truncate">INFOSEC · OSINT · CTI · GEOIP · MODELS</span>
+        </div>
+      </div>
       <header className="sticky top-0 z-40 border-b border-[var(--ftw-border)] bg-[rgba(5,5,6,0.92)] backdrop-blur">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-3 py-3 sm:px-4">
           <Link to="/" className="flex min-w-0 items-center gap-2.5 no-underline">

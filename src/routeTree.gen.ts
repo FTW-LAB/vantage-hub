@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ActivityRouteImport } from './routes/activity'
 import { Route as DaemonRouteImport } from './routes/daemon'
+import { Route as HwihfRouteImport } from './routes/hwihf'
 import { Route as LegalRouteImport } from './routes/legal'
+import { Route as LinksRouteImport } from './routes/links'
 import { Route as ModelsRouteImport } from './routes/models'
 import { Route as SecurityRouteImport } from './routes/security'
 import { Route as ToolsRouteImport } from './routes/tools'
@@ -33,9 +35,19 @@ const DaemonRoute = DaemonRouteImport.update({
   path: '/daemon',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HwihfRoute = HwihfRouteImport.update({
+  id: '/hwihf',
+  path: '/hwihf',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LegalRoute = LegalRouteImport.update({
   id: '/legal',
   path: '/legal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LinksRoute = LinksRouteImport.update({
+  id: '/links',
+  path: '/links',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ModelsRoute = ModelsRouteImport.update({
@@ -63,7 +75,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/activity': typeof ActivityRoute
   '/daemon': typeof DaemonRoute
+  '/hwihf': typeof HwihfRoute
   '/legal': typeof LegalRoute
+  '/links': typeof LinksRoute
   '/models': typeof ModelsRoute
   '/security': typeof SecurityRoute
   '/tools': typeof ToolsRoute
@@ -73,7 +87,9 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/activity': typeof ActivityRoute
   '/daemon': typeof DaemonRoute
+  '/hwihf': typeof HwihfRoute
   '/legal': typeof LegalRoute
+  '/links': typeof LinksRoute
   '/models': typeof ModelsRoute
   '/security': typeof SecurityRoute
   '/tools': typeof ToolsRoute
@@ -84,7 +100,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/activity': typeof ActivityRoute
   '/daemon': typeof DaemonRoute
+  '/hwihf': typeof HwihfRoute
   '/legal': typeof LegalRoute
+  '/links': typeof LinksRoute
   '/models': typeof ModelsRoute
   '/security': typeof SecurityRoute
   '/tools': typeof ToolsRoute
@@ -96,7 +114,9 @@ export interface FileRouteTypes {
     | '/'
     | '/activity'
     | '/daemon'
+    | '/hwihf'
     | '/legal'
+    | '/links'
     | '/models'
     | '/security'
     | '/tools'
@@ -106,7 +126,9 @@ export interface FileRouteTypes {
     | '/'
     | '/activity'
     | '/daemon'
+    | '/hwihf'
     | '/legal'
+    | '/links'
     | '/models'
     | '/security'
     | '/tools'
@@ -116,7 +138,9 @@ export interface FileRouteTypes {
     | '/'
     | '/activity'
     | '/daemon'
+    | '/hwihf'
     | '/legal'
+    | '/links'
     | '/models'
     | '/security'
     | '/tools'
@@ -127,7 +151,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ActivityRoute: typeof ActivityRoute
   DaemonRoute: typeof DaemonRoute
+  HwihfRoute: typeof HwihfRoute
   LegalRoute: typeof LegalRoute
+  LinksRoute: typeof LinksRoute
   ModelsRoute: typeof ModelsRoute
   SecurityRoute: typeof SecurityRoute
   ToolsRoute: typeof ToolsRoute
@@ -157,11 +183,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DaemonRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hwihf': {
+      id: '/hwihf'
+      path: '/hwihf'
+      fullPath: '/hwihf'
+      preLoaderRoute: typeof HwihfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/legal': {
       id: '/legal'
       path: '/legal'
       fullPath: '/legal'
       preLoaderRoute: typeof LegalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/links': {
+      id: '/links'
+      path: '/links'
+      fullPath: '/links'
+      preLoaderRoute: typeof LinksRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/models': {
@@ -199,7 +239,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ActivityRoute: ActivityRoute,
   DaemonRoute: DaemonRoute,
+  HwihfRoute: HwihfRoute,
   LegalRoute: LegalRoute,
+  LinksRoute: LinksRoute,
   ModelsRoute: ModelsRoute,
   SecurityRoute: SecurityRoute,
   ToolsRoute: ToolsRoute,

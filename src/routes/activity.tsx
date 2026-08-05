@@ -32,22 +32,28 @@ function ActivityPage() {
           Activity
         </h1>
         <p className="max-w-2xl text-sm text-[var(--ftw-muted)]">
-          One flywheel language for both lanes: Discover (GH + HF) → Contribute →
-          Package → Field → Compound. Seed events keep the board honest when APIs
-          rate-limit. No personal handle themes.
+          Pulse control plane: GitHub org events + Hugging Face public search + site
+          ledger. Mode{' '}
+          <strong className="text-white">{data.mode || (data.live ? 'HYBRID' : 'SEED')}</strong>
+          . Seed fills gaps — never personal handles.
         </p>
-        <div className="flex flex-wrap gap-2">
-          {data.sources.map((s) => (
-            <span
-              key={s}
-              className={`ops-chip ${s === 'hf_scout' || s === 'gh_scout' || s === 'model_pull' ? 'ops-chip-live' : ''}`}
-            >
-              {SOURCE_LABEL[s] || s}
-            </span>
+        <div className="grid gap-2 sm:grid-cols-3">
+          {(data.sourceCards || []).map((c) => (
+            <div key={c.id} className="ops-panel p-3">
+              <div className="ops-label">{c.label}</div>
+              <div className="mt-1 flex items-baseline justify-between gap-2">
+                <span
+                  className={`ops-chip ${c.status === 'live' ? 'ops-chip-live' : ''}`}
+                >
+                  {c.status}
+                </span>
+                <span className="font-mono text-lg text-white">{c.count}</span>
+              </div>
+              <p className="mt-1 text-[10px] text-[var(--ftw-label)] break-all">
+                {c.detail}
+              </p>
+            </div>
           ))}
-          <span className={`ops-chip ${data.live ? 'ops-chip-live' : ''}`}>
-            {data.live ? 'org live' : 'seed fallback'}
-          </span>
         </div>
         <div className="flex flex-wrap gap-2">
           <Link to="/models" className="ops-btn no-underline">
@@ -55,6 +61,9 @@ function ActivityPage() {
           </Link>
           <Link to="/daemon" className="ops-btn no-underline">
             GH Scout
+          </Link>
+          <Link to="/links" className="ops-btn no-underline">
+            Links ledger
           </Link>
         </div>
       </header>

@@ -152,6 +152,23 @@ Rules: local-first; evidence checklist; dual-forge offline fielding.
 Ethics gate: authorized use only.`,
     hfModels: ['TheBloke/Mistral-7B-Instruct-v0.2-GGUF'],
   },
+  {
+    id: 'hf-model-scout',
+    opsRole: 'HF Scout',
+    stage: 'discover',
+    summary: 'Hugging Face public model discovery for FTW Lab dual-forge.',
+    securityNote: 'Public hub API only. License review before fielding. No illegal rehost.',
+    githubPath: `github.com/${GITHUB_ORG}/hf-model-scout`,
+    clone: `git clone https://github.com/${GITHUB_ORG}/hf-model-scout.git`,
+    siteHref: '/models',
+    agentPrompt: `You are FTW Lab HF Model Scout (org FTW-LAB).
+Rules: public Hugging Face artifacts only; User-Agent ftwlab-scout; ethics gates in prompts.
+1) Clone hf-model-scout.
+2) Run hub search packs (CTI, embeddings, GGUF, code security).
+3) Emit hf_scout events; pair with FTW-LAB packages via /use-cases.
+Ethics gate: no unauthorized data; no weight rehost.`,
+    hfModels: ['BAAI/bge-small-en-v1.5', 'ehsanaghaei/SecureBERT'],
+  },
 ]
 
 export function packageById(id: string) {
