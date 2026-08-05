@@ -11,4 +11,4 @@ labels: scout
 ## Link
 ## legal_risk
 ## Why infosec-relevant
-## Suggested FTW-LAB package adapter
+## Suggested securist package adapter

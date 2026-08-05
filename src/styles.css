@@ -8,7 +8,7 @@
   --ftw-panel: #0a0a0c;
   --ftw-border: rgba(255, 255, 255, 0.08);
   --ftw-muted: #8a8a93;
-  --ftw-label: #6b6b75;
+  --securistel: #6b6b75;
 }
 
 * {
@@ -50,7 +50,7 @@ a {
   font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--ftw-label);
+  color: var(--securistel);
   font-weight: 600;
 }
 

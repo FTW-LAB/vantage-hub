@@ -33,7 +33,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   return (
     <div className="ops-shell min-h-screen bg-[var(--ftw-void)] text-[#e8e8ec]">
       <div className="border-b border-[var(--ftw-border)] bg-black/50">
-        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-3 py-1.5 text-[10px] tracking-[0.12em] text-[var(--ftw-label)] uppercase sm:px-4">
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-3 py-1.5 text-[10px] tracking-[0.12em] text-[var(--securistel)] uppercase sm:px-4">
           <span className="ops-accent">UNCLASSIFIED // PUBLIC SOURCE</span>
           <span className="truncate">INFOSEC · OSINT · CTI · GEOIP · MODELS</span>
         </div>
@@ -49,10 +49,10 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
               className="h-7 w-7 shrink-0 rounded-sm"
             />
             <div className="min-w-0 leading-tight">
-              <div className="truncate text-xs font-semibold tracking-[0.12em] text-white uppercase">
-                {BRAND.productHouse}
+              <div className="truncate text-xs font-semibold tracking-[0.14em] text-white uppercase">
+                SECURIST
               </div>
-              <div className="ops-label truncate">{BRAND.productHub}</div>
+              <div className="ops-label truncate">UNCLASSIFIED</div>
             </div>
           </Link>
           <nav className="flex max-w-full flex-wrap items-start gap-x-4 gap-y-2">
@@ -80,7 +80,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
       <main className="mx-auto max-w-5xl px-3 py-6 sm:px-4 sm:py-8">{children}</main>
 
       <footer className="border-t border-[var(--ftw-border)] py-5">
-        <div className="mx-auto flex max-w-5xl flex-col gap-1 px-3 text-[10px] text-[var(--ftw-label)] sm:flex-row sm:items-center sm:justify-between sm:px-4">
+        <div className="mx-auto flex max-w-5xl flex-col gap-1 px-3 text-[10px] text-[var(--securistel)] sm:flex-row sm:items-center sm:justify-between sm:px-4">
           <p className="tracking-wide uppercase">
             {BRAND.productHouse} · {BRAND.productHub} ·{' '}
             <Link to="/legal" className="ops-accent no-underline">

@@ -23,11 +23,15 @@ function SecurityPage() {
         <h2 className="ops-label">Reporting</h2>
         <p className="mt-2 text-[12px] text-[var(--ftw-muted)]">
           Email{' '}
+          <a className="ops-accent" href={`mailto:${BRAND.securityEmail}`}>
+            {BRAND.securityEmail}
+          </a>{' '}
+          (ops:{' '}
           <a className="ops-accent" href={`mailto:${BRAND.email}`}>
             {BRAND.email}
-          </a>{' '}
-          with affected surface, impact, and legal reproduction steps. Do not open
-          public issues for unfixed security problems.
+          </a>
+          ) with affected surface, impact, and legal reproduction steps. Do not
+          open public issues for unfixed security problems.
         </p>
       </section>
 
@@ -41,7 +45,7 @@ function SecurityPage() {
           </li>
           <li>
             <strong className="text-white">Hugging Face lane:</strong> public hub
-            APIs via User-Agent ftwlab-scout; model card license review required
+            APIs via User-Agent securist-scout; model card license review required
             before fielding; operator-controlled cache only — never illegal rehost.
           </li>
           <li>
@@ -95,7 +99,7 @@ function SecurityPage() {
           <li>
             <strong className="text-white">Cloudflare:</strong> nameservers live;
             Full (strict) SSL, Always HTTPS, Rocket Loader off, security level
-            high — see DEPLOY.md / scripts/cloudflare-secure-ftwlab.sh.
+            high — see DEPLOY.md / scripts/cloudflare-secure-securist.sh.
           </li>
         </ul>
       </section>

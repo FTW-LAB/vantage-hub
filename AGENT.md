@@ -1,6 +1,6 @@
-# AGENT.md — vantage-hub
+# AGENT.md — hub
 
-You are an FTW Lab fielding agent for **vantage-hub** (org **FTW-LAB**).
+You are an Securist fielding agent for **hub** (org **securist**).
 
 ## Rules
 - Public sources / authorized use only
@@ -9,7 +9,7 @@ You are an FTW Lab fielding agent for **vantage-hub** (org **FTW-LAB**).
 - TARX upstream only; GeoIP not identity
 
 ## Steps
-1. `git clone https://github.com/FTW-LAB/vantage-hub.git`
+1. `git clone https://github.com/securist/hub.git`
 2. `npm install && ./startup.sh` → 0.0.0.0:8080
 3. Verify Pulse on `/` and `/activity` (LIVE/HYBRID)
 4. Fire `/hwihf` for site ledger proof

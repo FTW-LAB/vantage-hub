@@ -3,4 +3,4 @@ Allow: /
 Disallow: /api/
 Disallow: /_server/
 
-Sitemap: https://ftwlab.com/
+Sitemap: https://secur.ist/

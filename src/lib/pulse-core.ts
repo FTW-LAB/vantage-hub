@@ -25,7 +25,7 @@ export type FlywheelPulse = {
   stack: string
 }
 
-const UA = 'ftwlab-scout (+https://ftwlab.com; legal public-source only)'
+const UA = 'Securist-Scout (+https://secur.ist; legal public-source only)'
 const CACHE_MS = 45_000
 
 let cache: { at: number; pulse: FlywheelPulse } | null = null
@@ -73,7 +73,7 @@ function mapOrgEvent(e: GhEvent): FlywheelEvent {
     source: 'org',
     stage: 'contribute',
     title,
-    detail: 'Public FTW-LAB event',
+    detail: 'Public securist event',
     url: repo ? `https://github.com/${repo}` : undefined,
     actor: BRAND.githubOrg,
     repo,
@@ -175,7 +175,7 @@ async function loadHfPlane(): Promise<{
       source: 'hf_scout',
       stage: 'discover',
       title: `HF Scout hit: ${id}`,
-      detail: 'Public hub search · ftwlab-scout',
+      detail: 'Public hub search · securist-scout',
       url: `https://huggingface.co/${id}`,
       actor: 'hf-model-scout',
       repo: id,
@@ -227,7 +227,7 @@ export async function getFlywheelPulse(options?: {
   const sources: PulseSourceCard[] = [
     {
       id: 'github',
-      label: 'GitHub FTW-LAB',
+      label: 'GitHub securist',
       status: gh.status === 'empty' && SEED_EVENTS.length ? 'seed' : gh.status,
       count: gh.events.length || (gh.status === 'empty' ? SEED_EVENTS.filter((e) => e.source === 'gh_scout' || e.source === 'org' || e.source === 'package').length : 0),
       detail: gh.detail,

@@ -15,7 +15,7 @@ export function CopyPage({
     const href =
       typeof window !== 'undefined' ? window.location.href : `https://${BRAND.domain}`
     const text = [
-      `FTW Lab · Vantage — ${title}`,
+      `Securist · Securist — ${title}`,
       `URL: ${href}`,
       `Org: ${BRAND.githubOrg} · HF: ${BRAND.hfOrg}`,
       `Doctrine: ${BRAND.doctrine}`,

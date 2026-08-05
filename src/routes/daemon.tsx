@@ -8,9 +8,9 @@ export const Route = createFileRoute('/daemon')({
   component: DaemonPage,
 })
 
-const SCOUT_PROMPT = `You are an FTW Lab fielding agent running GitHub Scout (org FTW-LAB).
+const SCOUT_PROMPT = `You are an Securist fielding agent running GitHub Scout (org securist).
 Rules: public repositories only; rate-limited; tag legal_risk; no private access; no credential stuffing.
-1) Inventory public org packages under FTW-LAB.
+1) Inventory public org packages under securist.
 2) Emit gh_scout events with repo + legal_risk + summary.
 3) Pair with HF Model Scout on /models.
 Ethics gate: refuse unauthorized access. MaxMind honesty for geo (city/ASN only).`
@@ -26,7 +26,7 @@ function DaemonPage() {
           <h1 className="mt-1 text-xl font-semibold tracking-[0.08em] text-white uppercase">
             Scout
           </h1>
-          <p className="mt-1 text-[11px] text-[var(--ftw-label)]">
+          <p className="mt-1 text-[11px] text-[var(--securistel)]">
             Auto inventory on load · pulse{' '}
             <span className="ops-accent">{data.pulseMode}</span> · org{' '}
             {data.brand.githubOrg}

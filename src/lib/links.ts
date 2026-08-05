@@ -26,14 +26,14 @@ export type ShortLink = {
 export const SHORT_LINKS: ShortLink[] = [
   {
     token: 'hwihf',
-    target: 'https://huggingface.co/FTWLAB',
-    label: 'HF house (FTWLAB)',
+    target: 'https://huggingface.co/securist',
+    label: 'HF house (securist)',
     opsRole: 'Field proof',
   },
   {
     token: 'gh',
-    target: 'https://github.com/FTW-LAB',
-    label: 'GitHub org FTW-LAB',
+    target: 'https://github.com/securist',
+    label: 'GitHub org securist',
     opsRole: 'Contribute',
   },
   {

@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useEffect } from 'react'
 import { hitShortLink } from '#/lib/activity-api'
 
-const HF = 'https://huggingface.co/FTWLAB'
+const HF = 'https://huggingface.co/securist'
 
 export const Route = createFileRoute('/hwihf')({
   component: HwihfRedirect,

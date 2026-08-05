@@ -40,7 +40,7 @@ function LinksPage() {
             only.
           </p>
         </div>
-        <CopyPage title="Links" body="Proof: /hwihf → huggingface.co/FTWLAB" />
+        <CopyPage title="Links" body="Proof: /hwihf → huggingface.co/securist" />
       </header>
 
       {msg ? (

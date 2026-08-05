@@ -1,9 +1,9 @@
-Contact: mailto:ops@ftwlab.com
+Contact: mailto:ops@secur.ist
 Expires: 2027-08-04T00:00:00.000Z
 Preferred-Languages: en
-Canonical: https://ftwlab.com/.well-known/security.txt
-Policy: https://ftwlab.com/security
-Hiring: https://ftwlab.com
+Canonical: https://secur.ist/.well-known/security.txt
+Policy: https://secur.ist/security
+Hiring: https://secur.ist
 
 # Dual-forge: GitHub (code) + Hugging Face (models). Legal public-source only.
 # Do not test unauthorized systems. No private repo access. No illegal weight rehost.

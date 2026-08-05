@@ -27,7 +27,7 @@ export const TOOLS: ToolEntry[] = [
     opsRole: 'Discover',
     href: '/daemon',
     summary:
-      'Public repos only. Rate-limited. legal_risk tags. Agent setup prompts. Org FTW-LAB.',
+      'Public repos only. Rate-limited. legal_risk tags. Agent setup prompts. Org securist.',
   },
   {
     id: 'hf-model-scout',
@@ -36,7 +36,7 @@ export const TOOLS: ToolEntry[] = [
     opsRole: 'Discover',
     href: '/models',
     summary:
-      'Public models via hub search (User-Agent ftwlab-scout). seed_only fallback if empty.',
+      'Public models via hub search (User-Agent securist-scout). seed_only fallback if empty.',
   },
   ...packageTools,
   {

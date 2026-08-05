@@ -1,5 +1,5 @@
 {
-  "name": "vantage-hub",
+  "name": "hub",
   "private": true,
   "type": "module",
   "imports": {

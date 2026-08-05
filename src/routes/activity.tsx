@@ -28,7 +28,7 @@ function ActivityPage() {
           <h1 className="mt-1 text-xl font-semibold tracking-[0.08em] text-white uppercase">
             Activity
           </h1>
-          <p className="mt-1 text-[11px] text-[var(--ftw-label)]">
+          <p className="mt-1 text-[11px] text-[var(--securistel)]">
             Auto-merge on load · mode{' '}
             <span className="ops-accent">{data.mode}</span> ·{' '}
             {data.fetchedAt
@@ -51,7 +51,7 @@ function ActivityPage() {
               </span>
               <span className="font-mono text-lg text-white">{c.count}</span>
             </div>
-            <p className="mt-1 text-[10px] text-[var(--ftw-label)] break-all">
+            <p className="mt-1 text-[10px] text-[var(--securistel)] break-all">
               {c.detail}
             </p>
           </div>
@@ -79,7 +79,7 @@ function ActivityPage() {
             <li key={e.id} className="px-3 py-2.5">
               <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <div className="text-[13px] text-white break-words">{e.title}</div>
-                <time className="text-[10px] text-[var(--ftw-label)] shrink-0">
+                <time className="text-[10px] text-[var(--securistel)] shrink-0">
                   {new Date(e.createdAt).toLocaleString()}
                 </time>
               </div>
@@ -88,7 +88,7 @@ function ActivityPage() {
                   {e.detail}
                 </p>
               ) : null}
-              <div className="mt-1 flex flex-wrap gap-2 text-[10px] text-[var(--ftw-label)]">
+              <div className="mt-1 flex flex-wrap gap-2 text-[10px] text-[var(--securistel)]">
                 <span className="ops-chip ops-chip-live">
                   {SOURCE_LABEL[e.source] || e.source}
                 </span>

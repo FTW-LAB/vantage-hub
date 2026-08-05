@@ -1,7 +1,7 @@
 # Acceptable Use Policy (AUP)
 
-**Product house:** FTW Lab  
-**Contact:** ops@ftwlab.com  
+**Product house:** Securist  
+**Contact:** ops@secur.ist  
 **Ops:** ops.com  
 
 ## Allowed
@@ -16,8 +16,8 @@
 - Unauthorized access to computer systems, accounts, or data
 - Distribution of malware, ransomware, or exploit weaponization against third parties
 - Scraping or processing personal data beyond what is lawfully public
-- Misrepresenting FTW Lab affiliation
-- Rebranding proprietary TARX product surfaces as FTW Lab product
+- Misrepresenting Securist affiliation
+- Rebranding proprietary TARX product surfaces as Securist product
 
 ## Enforcement
 
@@ -26,4 +26,4 @@ appropriate authorities where required by law.
 
 ## Reporting
 
-ops@ftwlab.com
+ops@secur.ist

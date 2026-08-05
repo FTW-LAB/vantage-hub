@@ -76,7 +76,7 @@ function UseCasesPage() {
                       </a>
                     ))
                   ) : (
-                    <span className="text-[var(--ftw-label)]">
+                    <span className="text-[var(--securistel)]">
                       none (package / geo path)
                     </span>
                   )}

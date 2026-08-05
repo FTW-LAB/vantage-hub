@@ -41,7 +41,7 @@ export const USE_CASES: UseCase[] = [
     id: 'osint-retrieval',
     title: 'Public-source OSINT retrieval',
     summary: 'BGE embeddings over public Scout summaries — no private issue bodies.',
-    packages: ['scout-daemon', 'implementer-sdk', 'vantage-hub'],
+    packages: ['scout-daemon', 'implementer-sdk', 'hub'],
     models: ['BAAI/bge-small-en-v1.5'],
     modelScope: 'bridged',
     opsAction: 'Index public Scout notes offline',

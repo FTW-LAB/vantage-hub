@@ -63,7 +63,7 @@ function ModelsPage() {
           <h1 className="mt-1 text-xl font-semibold tracking-[0.08em] text-white uppercase">
             Models
           </h1>
-          <p className="mt-1 text-[11px] text-[var(--ftw-label)]">
+          <p className="mt-1 text-[11px] text-[var(--securistel)]">
             Auto-scout on load ·{' '}
             <span className={scout.mode === 'live' ? 'ops-accent' : ''}>
               {scout.mode}
@@ -128,7 +128,7 @@ function ModelsPage() {
                   <td className="px-3 py-2 text-[var(--ftw-muted)]">
                     {h.pipeline_tag || '—'}
                   </td>
-                  <td className="px-3 py-2 text-[var(--ftw-label)]">
+                  <td className="px-3 py-2 text-[var(--securistel)]">
                     {typeof h.downloads === 'number' ? `dl ${h.downloads}` : ''}
                   </td>
                 </tr>

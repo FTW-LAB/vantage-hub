@@ -1,12 +1,12 @@
 /**
  * HF Model Scout — public hub search only.
- * User-Agent: ftwlab-scout · timeouts · rate-aware · seed fallback.
+ * User-Agent: securist-scout · timeouts · rate-aware · seed fallback.
  */
 
 import { CURATED_HF, HF_QUERY_PACKS, type HfCatalogRow } from './hf-catalog'
 
 const HF_API = 'https://huggingface.co/api'
-const UA = 'ftwlab-scout (+https://ftwlab.com; legal public-source only)'
+const UA = 'Securist-Scout (+https://secur.ist; legal public-source only)'
 const TIMEOUT_MS = 8_000
 
 export type HfLiveHit = {

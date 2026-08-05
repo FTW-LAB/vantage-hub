@@ -32,10 +32,10 @@ export const SEED_EVENTS: FlywheelEvent[] = [
     id: 'seed-vantage-boot',
     source: 'seed',
     stage: 'discover',
-    title: 'Vantage dual-forge hub online',
+    title: 'Securist dual-forge hub online',
     detail: 'GitHub code lane + Hugging Face model lane on one ops board.',
     actor: BRAND.productHouse,
-    repo: 'vantage-hub',
+    repo: 'hub',
     createdAt: new Date().toISOString(),
   },
   {
@@ -53,9 +53,9 @@ export const SEED_EVENTS: FlywheelEvent[] = [
     source: 'hf_scout',
     stage: 'discover',
     title: 'HF Scout: CTI / NER query pack',
-    detail: 'Public hub search via huggingface.co/api · User-Agent ftwlab-scout.',
+    detail: 'Public hub search via huggingface.co/api · User-Agent securist-scout.',
     actor: 'hf-model-scout',
-    repo: 'FTWLAB',
+    repo: 'securist',
     createdAt: new Date(Date.now() - 1000 * 60 * 35).toISOString(),
   },
   {
@@ -123,7 +123,7 @@ export const SEED_EVENTS: FlywheelEvent[] = [
     source: 'package',
     stage: 'package',
     title: 'ecosystem-prompts dual-forge pack',
-    detail: 'Agent prompts with FTW-LAB org + ethics gates for GH and HF.',
+    detail: 'Agent prompts with securist org + ethics gates for GH and HF.',
     actor: 'ecosystem-prompts',
     repo: 'ecosystem-prompts',
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 16).toISOString(),
@@ -176,7 +176,7 @@ async function fetchOrgEvents(
 ): Promise<GhEvent[]> {
   const headers: Record<string, string> = {
     Accept: 'application/vnd.github+json',
-    'User-Agent': 'ftwlab-scout',
+    'User-Agent': 'securist-scout',
     'X-GitHub-Api-Version': '2022-11-28',
   }
   if (token) headers.Authorization = `Bearer ${token}`

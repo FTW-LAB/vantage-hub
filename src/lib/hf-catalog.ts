@@ -16,11 +16,11 @@ export type HfCatalogRow = {
   license: string
   queryPack: string
   githubBridge: string
-  /** FTW-LAB package slugs that pair with this model */
+  /** securist package slugs that pair with this model */
   packageSlugs: string[]
   /**
-   * public_hub = third-party public model (not hosted under huggingface.co/FTWLAB)
-   * house = would be FTWLAB-authored (none published yet)
+   * public_hub = third-party public model (not hosted under huggingface.co/securist)
+   * house = would be securist-authored (none published yet)
    */
   catalogScope: 'public_hub' | 'house'
   tarxPull: string
@@ -104,7 +104,7 @@ export const CURATED_HF: HfCatalogRow[] = [
       'huggingface-cli download ehsanaghaei/SecureBERT --local-dir $TARX_MODELS/SecureBERT',
     opsAction: 'Pull for offline CTI embedding labs',
     opsRole: 'Discover → Field',
-    agentPrompt: `You are an FTW Lab fielding agent. Task: legally pull SecureBERT for offline CTI labs.
+    agentPrompt: `You are an Securist fielding agent. Task: legally pull SecureBERT for offline CTI labs.
 Rules: public sources only; respect model card license; operator-controlled cache only; do not rehost weights.
 1) Confirm license on https://huggingface.co/ehsanaghaei/SecureBERT
 2) Pull with: huggingface-cli download ehsanaghaei/SecureBERT --local-dir $TARX_MODELS/SecureBERT
@@ -132,7 +132,7 @@ Ethics gate: refuse private data, unauthorized access, or illegal rehost.`,
       'huggingface-cli download microsoft/codebert-base --local-dir $TARX_MODELS/codebert-base',
     opsAction: 'Research-only code security baselines',
     opsRole: 'Package → Field',
-    agentPrompt: `You are an FTW Lab fielding agent. Task: pull CodeBERT for research-only code security labs.
+    agentPrompt: `You are an Securist fielding agent. Task: pull CodeBERT for research-only code security labs.
 Rules: legal public weights; MIT/card license; no production "auto-exploit" framing.
 1) Read https://huggingface.co/microsoft/codebert-base license
 2) Pull offline to TARX-local metal
@@ -158,7 +158,7 @@ Ethics gate: no private repo access; no unauthorized scanning.`,
       'huggingface-cli download openai/whisper-large-v3 --local-dir $TARX_MODELS/whisper-large-v3',
     opsAction: 'Authorized transcription only',
     opsRole: 'Field',
-    agentPrompt: `You are an FTW Lab fielding agent. Task: pull Whisper for authorized transcription labs.
+    agentPrompt: `You are an Securist fielding agent. Task: pull Whisper for authorized transcription labs.
 Rules: operator-authorized audio only; respect Apache-2.0/card; no covert collection.
 1) Confirm license on model card
 2) Offline pull to TARX-local
@@ -177,13 +177,13 @@ Ethics gate: refuse unauthorized audio surveillance.`,
     license: 'MIT (verify card)',
     queryPack: 'osint-embed',
     githubBridge: 'Index public GH Scout summaries — no private issue bodies.',
-    packageSlugs: ['scout-daemon', 'implementer-sdk', 'vantage-hub', 'tarx-bridge'],
+    packageSlugs: ['scout-daemon', 'implementer-sdk', 'hub', 'tarx-bridge'],
     catalogScope: 'public_hub',
     tarxPull:
       'huggingface-cli download BAAI/bge-small-en-v1.5 --local-dir $TARX_MODELS/bge-small-en-v1.5',
     opsAction: 'Build offline public-source retrieval',
     opsRole: 'Discover → Compound',
-    agentPrompt: `You are an FTW Lab fielding agent. Task: field BGE embeddings for public-source OSINT retrieval.
+    agentPrompt: `You are an Securist fielding agent. Task: field BGE embeddings for public-source OSINT retrieval.
 Rules: public corpora only; MIT/card; operator cache only.
 1) Pull model offline via huggingface-cli
 2) Embed public Scout notes only
@@ -208,7 +208,7 @@ Ethics gate: no private data embeddings.`,
       'huggingface-cli download TheBloke/Mistral-7B-Instruct-v0.2-GGUF --include "*Q4_K_M*" --local-dir $TARX_MODELS/mistral-7b-instruct-gguf',
     opsAction: 'Local GGUF fielding for offline SOC lab',
     opsRole: 'Field → Compound',
-    agentPrompt: `You are an FTW Lab fielding agent. Task: pull a GGUF quant for sovereign offline SOC lab use.
+    agentPrompt: `You are an Securist fielding agent. Task: pull a GGUF quant for sovereign offline SOC lab use.
 Rules: verify license chain; operator-controlled cache; no illegal rehost; no phone-home on weights.
 1) Select Q4_K_M (or operator-specified) quant from model card
 2) huggingface-cli download … --local-dir $TARX_MODELS/…

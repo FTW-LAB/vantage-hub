@@ -56,7 +56,7 @@ function Home() {
           <h1 className="mt-1 text-xl font-semibold tracking-[0.08em] text-white uppercase sm:text-2xl">
             {data.productHub}
           </h1>
-          <p className="mt-1 text-[11px] text-[var(--ftw-label)]">
+          <p className="mt-1 text-[11px] text-[var(--securistel)]">
             Auto-boot · scout warm · activity merge
             {data.boot?.throttled ? ' · throttled' : ''} · pulse{' '}
             <span className="ops-accent">{data.pulse.mode}</span>
@@ -117,7 +117,7 @@ function Home() {
         </div>
         <table className="w-full min-w-[560px] text-left text-[11px]">
           <thead>
-            <tr className="border-b border-[var(--ftw-border)] text-[var(--ftw-label)]">
+            <tr className="border-b border-[var(--ftw-border)] text-[var(--securistel)]">
               <th className="px-3 py-2 font-medium">ID</th>
               <th className="px-3 py-2 font-medium">Role</th>
               <th className="px-3 py-2 font-medium">Clone</th>
@@ -154,7 +154,7 @@ function Home() {
         </div>
         <table className="w-full min-w-[520px] text-left text-[11px]">
           <thead>
-            <tr className="border-b border-[var(--ftw-border)] text-[var(--ftw-label)]">
+            <tr className="border-b border-[var(--ftw-border)] text-[var(--securistel)]">
               <th className="px-3 py-2 font-medium">Title</th>
               <th className="px-3 py-2 font-medium">Hub id</th>
               <th className="px-3 py-2 font-medium">Risk</th>
@@ -169,7 +169,7 @@ function Home() {
                   {m.repoId}
                 </td>
                 <td className="px-3 py-2 text-[var(--ftw-muted)]">{m.legalRisk}</td>
-                <td className="px-3 py-2 text-[var(--ftw-label)]">{m.catalogScope}</td>
+                <td className="px-3 py-2 text-[var(--securistel)]">{m.catalogScope}</td>
               </tr>
             ))}
           </tbody>
@@ -193,7 +193,7 @@ function Home() {
                     {t.name}
                   </Link>
                 </td>
-                <td className="px-3 py-2 text-[var(--ftw-label)]">{t.lane}</td>
+                <td className="px-3 py-2 text-[var(--securistel)]">{t.lane}</td>
                 <td className="px-3 py-2 text-[var(--ftw-muted)]">{t.opsRole}</td>
                 <td className="px-3 py-2 text-[var(--ftw-muted)]">{t.summary}</td>
               </tr>

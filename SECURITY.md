@@ -1,11 +1,11 @@
 # Security Policy
 
-Report vulnerabilities to **ops@ftwlab.com**.
+Report vulnerabilities to **ops@secur.ist**.
 
-Public policy: https://ftwlab.com/security
+Public policy: https://secur.ist/security
 
 ## Scope
-- This repository under org FTW-LAB
+- This repository under org securist
 - Legal public-source / authorized testing only
 
 ## Out of scope

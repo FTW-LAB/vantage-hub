@@ -8,4 +8,4 @@ labels: models
 ## License
 ## infosecUse
 ## legalRisk
-## FTW-LAB package bridge
+## securist package bridge

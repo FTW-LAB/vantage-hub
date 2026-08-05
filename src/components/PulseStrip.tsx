@@ -43,7 +43,7 @@ export function PulseStrip({
                   {e.detail}
                 </p>
               ) : null}
-              <div className="mt-1 flex flex-wrap gap-x-2 gap-y-0.5 text-[10px] text-[var(--ftw-label)]">
+              <div className="mt-1 flex flex-wrap gap-x-2 gap-y-0.5 text-[10px] text-[var(--securistel)]">
                 <span className="ops-accent">
                   {SOURCE_LABEL[e.source] || e.source}
                 </span>

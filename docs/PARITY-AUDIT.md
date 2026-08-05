@@ -1,7 +1,7 @@
-# FTW Lab dual-forge parity audit
+# Securist dual-forge parity audit
 
 **Date:** 2026-08-04  
-**Org (code):** `FTW-LAB` · **HF house:** `FTWLAB` · **Site:** Vantage (`vantage-hub`)  
+**Org (code):** `securist` · **HF house:** `securist` · **Site:** Securist (`hub`)  
 **Posture:** legal public-source only · no personal handles on public UI · no vendor affiliation claims
 
 ---
@@ -37,11 +37,11 @@
 | `src/lib/flywheel.ts` | Seed + org live events |
 | `src/lib/activity-api.ts` | Server functions |
 
-### GitHub `FTW-LAB` (remote, verified)
+### GitHub `securist` (remote, verified)
 
 | Repo | Exists |
 |------|--------|
-| `vantage-hub` | yes |
+| `hub` | yes |
 | `scout-daemon` | yes |
 | `implementer-sdk` | yes |
 | `geolite2-bridge` | yes |
@@ -51,15 +51,15 @@
 | `sovereignty-lab-kit` | yes |
 | `.github` (org profile) | yes |
 
-### Hugging Face `FTWLAB`
+### Hugging Face `securist`
 
 | Kind | Count (public API) |
 |------|---------------------|
-| models authored by FTWLAB | **0** |
+| models authored by securist | **0** |
 | datasets | **0** |
 | spaces | **0** (assumed empty) |
 
-Curated catalog on site references **public third-party** models (SecureBERT, CodeBERT, Whisper, BGE, GGUF) as **discovery/fielding targets**, not as FTWLAB-hosted weights. Marked `catalogScope: public_hub` — no false org ownership.
+Curated catalog on site references **public third-party** models (SecureBERT, CodeBERT, Whisper, BGE, GGUF) as **discovery/fielding targets**, not as securist-hosted weights. Marked `catalogScope: public_hub` — no false org ownership.
 
 ---
 
@@ -69,7 +69,7 @@ Curated catalog on site references **public third-party** models (SecureBERT, Co
 
 | Artifact | Site | GitHub story | HF story | Status | Fix |
 |----------|------|--------------|----------|--------|-----|
-| vantage-hub | Home hub | Repo + README | N/A | OK | Keep as product surface |
+| hub | Home hub | Repo + README | N/A | OK | Keep as product surface |
 | scout-daemon | /daemon, /tools | Repo README (had personal line) | N/A | FIXED | README depersonalized; catalog complete |
 | implementer-sdk | /daemon, /tools | Repo README thin | N/A | FIXED | README + agent prompt |
 | geolite2-bridge | /daemon, /tools | Repo README | Geo NLP pack only | OK | MaxMind honesty noted |
@@ -87,7 +87,7 @@ Curated catalog on site references **public third-party** models (SecureBERT, Co
 | Whisper large-v3 | /models | authorized audio only | authorized-asr | OK | risk medium |
 | BGE small EN | /models | public Scout notes embed | osint-retrieval | OK | — |
 | Mistral GGUF | /models | tarx-bridge local | sovereign-soc-lab | OK | license review |
-| FTWLAB-hosted models | none | n/a | n/a | MISSING | org empty — catalog only public hub; no fake ownership |
+| securist-hosted models | none | n/a | n/a | MISSING | org empty — catalog only public hub; no fake ownership |
 
 ### Tools / scouts
 
@@ -113,7 +113,7 @@ Curated catalog on site references **public third-party** models (SecureBERT, Co
 |----------|--------|-----|
 | Public UI `src/**` wantzjt | OK (none) | — |
 | Package READMEs wantzjt | FIXED | ops@ only |
-| org-github profile wantzjt + ftwforge | FIXED | FTW-LAB only |
+| org-github profile wantzjt + securist | FIXED | securist only |
 | LICENSE copyright wantzjt | OK | legal copyright, not UI marketing |
 | DEPLOY.md ops notes wantzjt | PARTIAL | ops runbook may name admin account; not rendered in UI |
 | bootstrap script wantzjt | OK | operator automation identity |
@@ -137,7 +137,7 @@ Curated catalog on site references **public third-party** models (SecureBERT, Co
 1. sovereignty-lab-kit missing from site packages → **fixed**
 2. redirect-intel missing from tools strip → **fixed**
 3. scout-daemon README personal handle → **fixed**
-4. org-github still said ftwforge → **fixed**
+4. org-github still said securist → **fixed**
 5. HF org empty but catalog implies house models → **documented public_hub scope**
 6. No use-case join table → **fixed**
 7. No /tools package catalog page → **fixed**
@@ -154,8 +154,8 @@ Curated catalog on site references **public third-party** models (SecureBERT, Co
 
 ## E. Remaining gaps (honest)
 
-- **HF account FTWLAB** has zero public models/datasets — site catalogs public hub artifacts only.
+- **HF account securist** has zero public models/datasets — site catalogs public hub artifacts only.
 - **No `/links` or `/hwihf` proof path** in this codebase.
 - **No per-package deep route** `/tools/:slug` — cards on `/tools` + GitHub README.
 - **GitHub Git → Vercel** may still need org app authorization for auto-deploy.
-- **ftwlab.com DNS → Vercel** may still need CF CNAME if not completed outside this audit.
+- **secur.ist DNS → Vercel** may still need CF CNAME if not completed outside this audit.

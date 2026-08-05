@@ -83,7 +83,7 @@ function ToolsPage() {
             </div>
             <h2 className="font-mono text-sm text-white">{r.id}</h2>
             <p className="text-[12px] text-[var(--ftw-muted)]">{r.summary}</p>
-            <p className="text-[11px] text-[var(--ftw-label)]">{r.securityNote}</p>
+            <p className="text-[11px] text-[var(--securistel)]">{r.securityNote}</p>
             <p className="ops-pre text-[10px] text-[var(--ftw-muted)]">{r.clone}</p>
             {r.hfModels?.length ? (
               <p className="text-[11px] text-[var(--ftw-muted)]">

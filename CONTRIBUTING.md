@@ -1,4 +1,4 @@
-# Contributing to FTW Lab (FTW-LAB)
+# Contributing to Securist (securist)
 
 UNCLASSIFIED // PUBLIC SOURCE  
 INFOSEC · OSINT · CTI · GEOIP · MODELS
@@ -15,9 +15,9 @@ INFOSEC · OSINT · CTI · GEOIP · MODELS
 - HF weights: operator-controlled cache; no illegal rehost
 
 ## Dual-forge
-- **GitHub** (`FTW-LAB`) — code packages  
-- **Hugging Face** (`FTWLAB`) — models/datasets/spaces discovery  
-- Hub: https://ftwlab.com
+- **GitHub** (`securist`) — code packages  
+- **Hugging Face** (`securist`) — models/datasets/spaces discovery  
+- Hub: https://secur.ist
 
 ## PR checklist
 - [ ] License / model card reviewed if HF-related  
@@ -25,4 +25,4 @@ INFOSEC · OSINT · CTI · GEOIP · MODELS
 - [ ] Smoke proof (route or `npm test`)  
 - [ ] No secrets  
 
-Ops: ops@ftwlab.com · Security: https://ftwlab.com/security
+Ops: ops@secur.ist · Security: https://secur.ist/security

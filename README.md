@@ -1,11 +1,11 @@
-# vantage-hub
+# hub
 
-**FTW Lab · Vantage** — dual-forge product hub for [ftwlab.com](https://ftwlab.com).
+**Securist · Securist** — dual-forge product hub for [secur.ist](https://secur.ist).
 
 | Lane | Role |
 |------|------|
 | GitHub | Code, packages, public Scout |
-| Hugging Face | Models, datasets, spaces — [FTWLAB](https://huggingface.co/FTWLAB) |
+| Hugging Face | Models, datasets, spaces — [securist](https://huggingface.co/securist) |
 
 ## Surfaces
 
